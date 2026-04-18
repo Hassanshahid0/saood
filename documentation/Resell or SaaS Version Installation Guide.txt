@@ -1,0 +1,15 @@
+Please follow below instructions: 
+1.	Go to project folder
+2.	Copy irestora_plus folder and upload it in your server
+3.	Open this file in your editor application/config/cofig.php
+4.	Make sure this line is looking like below:
+$config['base_url'] = 'http://localhost/irestora_plus/';
+5.	Create a database named irestora_plus
+6.	Go to database folder
+7.	Import irestora_plus SQL file into your database
+8.	Open this file in your editor application/config/database.php
+9.	Make sure these three variables are looking like below
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
+$db['default']['database'] = 'irestora_plus';
+10.	And finally run the project by accessing http://localhost/irestora_plus/
