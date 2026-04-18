@@ -1,0 +1,9 @@
+==========================iRestora PLUS Version 7.7 Update Instruction========================
+1- Please upload update_code.zip into your current installation
+2- Simply unzip it
+3- Open update_sql.sql file and copy all it's contents
+4- Go to your database and open SQL Editor
+5- Paste those SQL here and run/click on Go
+6- Update is done
+Note: Please clear your browser cache after update your system.
+==============================================================================================
