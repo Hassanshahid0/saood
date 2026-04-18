@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f5f5;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .card {
+      width: 445px;
+      background: white;
+      box-shadow: 0px 1px 62px 10px rgba(0, 0, 0, 0.03);
+      border-radius: 20px;
+      padding: 24px 28px 28px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header-title {
+      color: #2C2416;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 32px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .header-right-text {
+      color: #2C2416;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+
+    #chart-container {
+      width: 400px;
+      height: 200px;
+      margin: 0 auto;
+    }
+
+    .last-updated {
+      margin-top: 12px;
+      color: #7A7A7A;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .legend {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4.5px;
+    }
+
+    .legend-text {
+      color: #2C2416;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">Top Categories</div>
+      <div class="header-right">
+        <div class="header-right-text">Last Month</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2.51465 4.77148L7.75724 10.0141L12.9998 4.77148" stroke="#2C2416" stroke-width="1.74753" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div id="chart-container">
+      <canvas id="chart"></canvas>
+    </div>
+
+    <!-- Last Updated -->
+    <div class="last-updated">Last Updated on 21 Jan</div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-row">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #96CF6E;"></div>
+          <div class="legend-text">Sea Food 50%</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #CFB06E;"></div>
+          <div class="legend-text">Beverages 30%</div>
+        </div>
+      </div>
+      <div class="legend-row" style="gap: 30px;">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #CF8B6E;"></div>
+          <div class="legend-text">Dessert 15%</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #CF6E6E;"></div>
+          <div class="legend-text">Pasta 5%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Color palette for categories
+    const categoryColors = [
+      '#96CF6E',  // Green
+      '#CFB06E',  // Gold
+      '#CF8B6E',  // Orange
+      '#CF6E6E',  // Red
+      '#6E9ECF',  // Blue
+      '#9E6ECF',  // Purple
+      '#CF6E9E',  // Pink
+      '#6ECFCF'   // Teal
+    ];
+
+    // Function to fetch and render chart data
+    async function loadChartData() {
+      try {
+        // Fetch data from API endpoint
+        const response = await fetch('get_categories.php');
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          console.warn('No category data found, using default sample data');
+          // Fallback to sample data if no database records
+          return {
+            labels: ['Sea Food', 'Beverages', 'Dessert', 'Pasta'],
+            data: [50, 30, 15, 5]
+          };
+        }
+
+        const labels = result.data.map(item => item.category_name);
+        const data = result.data.map(item => item.totalQty);
+        
+        return { labels, data };
+      } catch (error) {
+        console.error('Error loading chart data:', error);
+        // Fallback to sample data on error
+        return {
+          labels: ['Sea Food', 'Beverages', 'Dessert', 'Pasta'],
+          data: [50, 30, 15, 5]
+        };
+      }
+    }
+
+    // Initialize chart after data is loaded
+    loadChartData().then(chartData => {
+      const backgroundColors = chartData.labels.map((_, index) => 
+        categoryColors[index % categoryColors.length]
+      );
+
+      // Calculate total for percentage display
+      const total = chartData.data.reduce((sum, val) => sum + val, 0);
+      const progressPercentage = total > 0 ? Math.round((total / total) * 100) : 0;
+
+      new Chart(document.getElementById('chart'), {
+        type: 'doughnut',
+        data: {
+          labels: chartData.labels,
+          datasets: [{
+            data: chartData.data,
+            backgroundColor: backgroundColors,
+            borderWidth: 0,
+            borderRadius: 20,
+            spacing: 6
+          }]
+        },
+        options: {
+          rotation: -90,
+          circumference: 180,
+          cutout: '80%',
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { 
+              enabled: true,
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed;
+                  const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
+                  return `${label}: ${value} (${percentage}%)`;
+                }
+              }
+            },
+            beforeDraw: function(chart) {
+              const ctx = chart.ctx;
+              const width = chart.width;
+              const height = chart.height;
+              ctx.save();
+
+              // Text settings
+              ctx.font = "bold 24px Arial";
+              ctx.fillStyle = "#000";
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+
+              // Adjust vertical position for half-doughnut
+              const centerX = width / 2;
+              const centerY = height * 0.4; // visually center in semi-circle
+
+              ctx.fillText(`Progress ${total}`, centerX, centerY);
+
+              ctx.restore();
+            }
+          }
+        }
+      });
+
+      // Update legends dynamically
+      updateLegends(chartData.labels, chartData.data, backgroundColors, total);
+    });
+
+    // Function to update legend
+    function updateLegends(labels, data, colors, total) {
+      const legendContainer = document.querySelector('.legend');
+      legendContainer.innerHTML = '';
+
+      labels.forEach((label, index) => {
+        const percentage = total > 0 ? ((data[index] / total) * 100).toFixed(0) : 0;
+        
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        legendItem.innerHTML = `
+          <div class="legend-dot" style="background: ${colors[index]};"></div>
+          <div class="legend-text">${label} ${percentage}%</div>
+        `;
+
+        // Add to container in rows of 2
+        if (index % 2 === 0) {
+          const row = document.createElement('div');
+          row.className = 'legend-row';
+          row.appendChild(legendItem);
+          legendContainer.appendChild(row);
+        } else {
+          const lastRow = legendContainer.lastElementChild;
+          lastRow.appendChild(legendItem);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

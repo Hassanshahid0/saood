@@ -1,0 +1,129 @@
+<!-- Doughnut Chart Card -->
+<div style="width: calc(40% - 0px); background: white; box-shadow: 0px 1px 62px 10px rgba(0, 0, 0, 0.03); overflow: hidden; border-radius: 20px; padding: 24px 28px 28px; display: flex; flex-direction: column; min-height: 380px; position: relative;">
+    <!-- Header -->
+    <div data-layer="Frame 51" class="Frame51" style="width: 100%; justify-content: space-between; align-items: center; display: flex;">
+        <div data-layer="Title" class="Title" style="color: #2C2416; font-size: 20px; font-family: 'DM Sans', sans-serif; font-weight: 600; line-height: 32px; word-wrap: break-word;">Top Categories</div>
+        <div data-layer="Frame 37" class="Frame37" style="justify-content: flex-end; align-items: center; gap: 10px; display: flex; cursor: pointer;">
+            <div data-layer="Last Month" class="LastMonth" style="text-align: right; color: #2C2416; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 600; line-height: 24px; word-wrap: break-word;">Last Month</div>
+            <div data-svg-wrapper data-layer="Icon" class="Icon" style="position: relative;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.51465 4.77148L7.75724 10.0141L12.9998 4.77148" stroke="#2C2416" stroke-width="1.74753" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chart Container -->
+    <div id="chart-container" style="width: 100%; height: 200px; position: relative; margin-top: 28px;">
+        <canvas id="categories_doughnut_chart"></canvas>
+        <!-- Center Text -->
+        <div data-layer="1280" style="left: 50%; top: 125px; position: absolute; transform: translateX(-50%); text-align: center; color: #242424; font-size: 48px; font-family: 'DM Sans', sans-serif; font-weight: 600; line-height: 58px; word-wrap: break-word; pointer-events: none;">1280</div>
+    </div>
+    
+    <!-- Last Updated Text -->
+    <div style="margin-top: 12px; color: #7A7A7A; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500; line-height: 18px; word-wrap: break-word; text-align: center;">Last Updated on 21 Jan</div>
+    
+    <!-- Legend Section -->
+    <div style="margin-top: 28px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+        <!-- Row 1 -->
+        <div style="align-self: stretch; justify-content: center; align-items: center; gap: 20px; display: flex; flex-wrap: wrap;">
+            <div style="justify-content: flex-start; align-items: center; gap: 8px; display: flex;">
+                <div data-svg-wrapper>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="12" height="12" rx="4.5" fill="#96CF6E"/>
+                    </svg>
+                </div>
+                <div style="justify-content: center; display: flex; flex-direction: column; color: #2C2416; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 24px; word-wrap: break-word;">Sea Food 50%</div>
+            </div>
+            <div style="justify-content: flex-start; align-items: center; gap: 8px; display: flex;">
+                <div data-svg-wrapper>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="12" height="12" rx="4.5" fill="#CFB06E"/>
+                    </svg>
+                </div>
+                <div style="justify-content: center; display: flex; flex-direction: column; color: #2C2416; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 24px; word-wrap: break-word;">Beverages 30%</div>
+            </div>
+        </div>
+        <!-- Row 2 -->
+        <div style="justify-content: flex-start; align-items: center; gap: 30px; display: flex; flex-wrap: wrap;">
+            <div style="justify-content: flex-start; align-items: center; gap: 8px; display: flex;">
+                <div data-svg-wrapper>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="12" height="12" rx="4.5" fill="#CF8B6E"/>
+                    </svg>
+                </div>
+                <div style="justify-content: center; display: flex; flex-direction: column; color: #2C2416; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 24px; word-wrap: break-word;">Dessert 15%</div>
+            </div>
+            <div style="justify-content: flex-start; align-items: center; gap: 8px; display: flex;">
+                <div data-svg-wrapper>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="12" height="12" rx="4.5" fill="#CF6E6E"/>
+                    </svg>
+                </div>
+                <div style="justify-content: center; display: flex; flex-direction: column; color: #2C2416; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 24px; word-wrap: break-word;">Pasta 5%</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Doughnut Chart JavaScript -->
+<script>
+$(document).ready(function() {
+    function renderCategoriesDoughnut() {
+        var el = document.getElementById('categories_doughnut_chart');
+        if (!el) {
+            console.error('Canvas element not found for doughnut chart');
+            return;
+        }
+
+        console.log('Rendering doughnut chart, Chart.js version:', Chart.version || 'unknown');
+        
+        const data = [50, 30, 15, 5];
+
+        new Chart(el, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        '#96CF6E',
+                        '#CFB06E',
+                        '#CF8B6E',
+                        '#CF6E6E'
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 20,
+                    spacing: 6
+                }]
+            },
+            options: {
+                rotation: -90,
+                circumference: 180,
+                cutout: '78%',
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            }
+        });
+    }
+    
+    if (document.getElementById('categories_doughnut_chart')) {
+        // Load Chart.js v4 from CDN
+        console.log('Loading Chart.js v4 from CDN...');
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js';
+        s.onload = function() {
+            console.log('Chart.js loaded from CDN');
+            setTimeout(function() {
+                renderCategoriesDoughnut();
+            }, 100);
+        };
+        s.onerror = function() {
+            console.error('Failed to load Chart.js from CDN');
+        };
+        document.head.appendChild(s);
+    }
+});
+</script>

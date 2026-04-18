@@ -1,0 +1,504 @@
+-- ==========================================
+-- COMPLETE SAMPLE DATA: 5 RECORDS PER TABLE
+-- Safe to append. Maintains referential integrity.
+-- ==========================================
+
+-- 1. tbl_areas
+INSERT INTO `tbl_areas` (`outlet_id`, `area_name`, `description`, `company_id`, `tbl_border_color`, `tbl_bg_color`, `tbl_text_color`, `ordered_border_color`, `ordered_bg_color`, `ordered_text_color`, `box_border_color`, `box_bg_color`, `box_text_color`, `table_design_content`, `del_status`) VALUES
+(1, 'Patio', 'Outdoor seating area', 1, '#333', '#f4f4f4', '#333', '#007bff', '#e9ecef', '#fff', '#6c757d', '#fff', '#212529', '<div id="canvas"><div style="left:50px;top:50px">Patio Table 1</div></div>', 'Live'),
+(1, 'Bar Lounge', 'Premium bar area', 1, '#555', '#e0e0e0', '#222', '#28a745', '#d4edda', '#155724', '#17a2b8', '#fff', '#004085', '<div id="canvas"><div style="left:100px;top:100px">Bar Table 1</div></div>', 'Live'),
+(1, 'Private Dining', 'Reserved room for events', 1, '#777', '#d6d6d6', '#111', '#ffc107', '#fff3cd', '#856404', '#28a745', '#fff', '#155724', '<div id="canvas"><div style="left:150px;top:150px">Private Table 1</div></div>', 'Live'),
+(1, 'Family Zone', 'Spacious area for families', 1, '#999', '#c8c8c8', '#000', '#dc3545', '#f8d7da', '#721c24', '#6c757d', '#fff', '#343a40', '<div id="canvas"><div style="left:200px;top:200px">Family Table 1</div></div>', 'Live'),
+(1, 'VIP Section', 'Exclusive premium section', 1, '#222', '#aaa', '#fff', '#17a2b8', '#d1ecf1', '#0c5460', '#20c997', '#fff', '#005a3a', '<div id="canvas"><div style="left:250px;top:250px">VIP Table 1</div></div>', 'Live');
+
+-- 2. tbl_carts
+INSERT INTO `tbl_carts` (`user_id`, `outlet_id`, `company_id`, `json_content`) VALUES
+(1, 1, 1, '{"items":[{"menu_id":1,"qty":2,"modifiers":[]}]}'),
+(2, 1, 1, '{"items":[{"menu_id":2,"qty":1,"modifiers":[]}]}'),
+(3, 1, 1, '{"items":[{"menu_id":3,"qty":3,"modifiers":[1]}]}'),
+(4, 1, 1, '{"items":[{"menu_id":4,"qty":1,"modifiers":[]}]}'),
+(5, 1, 1, '{"items":[{"menu_id":5,"qty":2,"modifiers":[2]}]}');
+
+-- 3. tbl_combo_food_menus
+INSERT INTO `tbl_combo_food_menus` (`name`, `quantity`, `food_menu_id`, `added_food_menu_id`, `user_id`, `company_id`, `del_status`) VALUES
+('Burger Combo', 1, 3, 1, 1, 1, 'Live'),
+('Family Feast', 2, 4, 2, 1, 1, 'Live'),
+('Veggie Delight', 1, 2, 4, 1, 1, 'Live'),
+('Seafood Platter', 2, 5, 1, 1, 1, 'Live'),
+('Kids Happy Meal', 1, 3, 5, 1, 1, 'Live');
+
+-- 4. tbl_contacts
+INSERT INTO `tbl_contacts` (`first_name`, `last_name`, `email`, `subject`, `message`, `company_id`, `del_status`) VALUES
+('John', 'Doe', 'john@example.com', 'Partnership Inquiry', 'Interested in franchise opportunities.', 1, 'Live'),
+('Jane', 'Smith', 'jane@example.com', 'Technical Support', 'Facing issues with printer configuration.', 1, 'Live'),
+('Robert', 'Johnson', 'robert@example.com', 'Billing Question', 'Clarification needed on monthly invoice.', 1, 'Live'),
+('Emily', 'Davis', 'emily@example.com', 'Feature Request', 'Suggestion for loyalty program update.', 1, 'Live'),
+('Michael', 'Wilson', 'michael@example.com', 'Training Request', 'Need onboarding for new staff.', 1, 'Live');
+
+-- 5. tbl_counters
+INSERT INTO `tbl_counters` (`name`, `outlet_id`, `invoice_printer_id`, `bill_printer_id`, `description`, `added_date`, `user_id`, `company_id`, `del_status`) VALUES
+('Counter 1', '1', 0, 0, 'Main POS terminal', NOW(), 1, 1, 'Live'),
+('Counter 2', '1', 0, 0, 'Secondary checkout', NOW(), 1, 1, 'Live'),
+('Counter 3', '1', 0, 0, 'Express lane', NOW(), 1, 1, 'Live'),
+('Counter 4', '1', 0, 0, 'Self-service kiosk', NOW(), 1, 1, 'Live'),
+('Counter 5', '1', 0, 0, 'Mobile register', NOW(), 1, 1, 'Live');
+
+-- 6. tbl_customer_address
+INSERT INTO `tbl_customer_address` (`customer_id`, `address`, `is_active`, `del_status`) VALUES
+(1, '123 Main St, Apt 4B', 1, 'Live'),
+(1, '456 Oak Ave, Suite 100', 0, 'Live'),
+(1, '789 Pine Rd, Unit 5', 1, 'Live'),
+(1, '321 Elm Dr, Floor 2', 0, 'Live'),
+(1, '654 Birch Ln, Villa 7', 1, 'Live');
+
+-- 7. tbl_customer_due_receives
+INSERT INTO `tbl_customer_due_receives` (`reference_no`, `payment_id`, `only_date`, `date`, `customer_id`, `amount`, `note`, `user_id`, `outlet_id`, `company_id`, `del_status`, `counter_id`) VALUES
+('CDR-001', 1, '2026-04-01', '2026-04-01', 1, 25.00, 'Partial payment for table 1', 1, 1, 1, 'Live', 1),
+('CDR-002', 2, '2026-04-02', '2026-04-02', 1, 50.00, 'Clearing pending balance', 1, 1, 1, 'Live', 2),
+('CDR-003', 1, '2026-04-03', '2026-04-03', 1, 75.00, 'Settling invoice #INV-101', 1, 1, 1, 'Live', 3),
+('CDR-004', 3, '2026-04-04', '2026-04-04', 1, 30.00, 'Cash adjustment received', 1, 1, 1, 'Live', 4),
+('CDR-005', 2, '2026-04-05', '2026-04-05', 1, 100.00, 'Full settlement', 1, 1, 1, 'Live', 5);
+
+-- 8. tbl_customers
+INSERT INTO `tbl_customers` (`name`, `phone`, `email`, `address`, `password`, `gst_number`, `pre_or_post_payment`, `area_id`, `user_id`, `company_id`, `del_status`, `date_of_birth`, `date_of_anniversary`, `default_discount`, `added_date`, `password_online_user`, `same_or_diff_state`, `active_code`) VALUES
+('Alice Johnson', '+1555010101', 'alice@email.com', '123 Maple St', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Pre Payment', NULL, 1, 1, 'Live', '1990-05-15', '2015-08-20', '5', NOW(), NULL, 0, NULL),
+('Bob Williams', '+1555010102', 'bob@email.com', '456 Oak Ave', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Post Payment', NULL, 1, 1, 'Live', '1985-11-22', '2010-12-15', '0', NOW(), NULL, 0, NULL),
+('Carol Davis', '+1555010103', 'carol@email.com', '789 Pine Rd', 'e10adc3949ba59abbe56e057f20f883e', 'GST123456', 'Pre Payment', NULL, 1, 1, 'Live', '1992-03-10', '2018-07-05', '10', NOW(), NULL, 0, NULL),
+('David Miller', '+1555010104', 'david@email.com', '321 Elm Dr', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Post Payment', NULL, 1, 1, 'Live', '1988-09-05', '2012-11-11', '0', NOW(), NULL, 0, NULL),
+('Eva Brown', '+1555010105', 'eva@email.com', '654 Birch Ln', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Pre Payment', NULL, 1, 1, 'Live', '1995-01-30', '2020-06-14', '7', NOW(), NULL, 0, NULL);
+
+-- 9. tbl_delivery_partners
+INSERT INTO `tbl_delivery_partners` (`name`, `aggregator_tran_code`, `description`, `user_id`, `company_id`, `del_status`) VALUES
+('FastRoute', 'FR-001', 'Express local delivery', 1, 1, 'Live'),
+('CityExpress', 'CE-002', 'Same-day city delivery', 1, 1, 'Live'),
+('SwiftRiders', 'SR-003', 'Bike courier service', 1, 1, 'Live'),
+('GlobalCourier', 'GC-004', 'International & regional', 1, 1, 'Live'),
+('EcoDeliver', 'ED-005', 'Eco-friendly packaging', 1, 1, 'Live');
+
+-- 10. tbl_expense_items
+INSERT INTO `tbl_expense_items` (`name`, `description`, `user_id`, `company_id`, `del_status`) VALUES
+('Rent', 'Monthly commercial space rent', 1, 1, 'Live'),
+('Marketing', 'Social media & print ads', 1, 1, 'Live'),
+('Maintenance', 'Equipment repairs & upkeep', 1, 1, 'Live'),
+('Supplies', 'Cleaning & office stationery', 1, 1, 'Live'),
+('Training', 'Staff development courses', 1, 1, 'Live');
+
+-- 11. tbl_expenses
+INSERT INTO `tbl_expenses` (`date`, `amount`, `category_id`, `employee_id`, `note`, `user_id`, `outlet_id`, `payment_id`, `del_status`) VALUES
+('2026-04-01', 1200.00, 1, 0, 'April rent payment', 1, 1, 1, 'Live'),
+('2026-04-02', 150.00, 2, 0, 'Facebook ad campaign', 1, 1, 2, 'Live'),
+('2026-04-03', 85.50, 3, 0, 'AC compressor repair', 1, 1, 1, 'Live'),
+('2026-04-04', 45.00, 4, 0, 'Dish soap & paper towels', 1, 1, 1, 'Live'),
+('2026-04-05', 200.00, 5, 3, 'Food safety certification', 1, 1, 3, 'Live');
+
+-- 12. tbl_explores
+INSERT INTO `tbl_explores` (`explore_title`, `explore_price`, `explore_des`, `user_id`, `company_id`, `del_status`) VALUES
+('Summer Special', 12.99, 'Refreshing drinks & salads', 1, 1, 'Live'),
+('Family Bundle', 39.99, 'Feast for 4 people', 1, 1, 'Live'),
+('Weekend Brunch', 18.50, 'Avocado toast & mimosas', 1, 1, 'Live'),
+('Late Night Deal', 9.99, 'Midnight snacks & desserts', 1, 1, 'Live'),
+('Student Discount', 15.00, 'Valid with valid student ID', 1, 1, 'Live');
+
+-- 13. tbl_food_menu_ratings
+INSERT INTO `tbl_food_menu_ratings` (`food_menu_id`, `rating`, `user_id`, `company_id`, `del_status`) VALUES
+(1, 5, 1, 1, 'Live'),
+(2, 4, 1, 1, 'Live'),
+(3, 5, 1, 1, 'Live'),
+(4, 4, 1, 1, 'Live'),
+(5, 3, 1, 1, 'Live');
+
+-- 14. tbl_food_menus_ingredients
+INSERT INTO `tbl_food_menus_ingredients` (`ingredient_id`, `consumption`, `food_menu_id`, `user_id`, `company_id`, `del_status`, `cost`, `total`) VALUES
+(1, 0.50, 1, 1, 1, 'Live', 5.50, 2.75),
+(2, 1.00, 2, 1, 1, 'Live', 3.20, 3.20),
+(3, 0.25, 3, 1, 1, 'Live', 8.00, 2.00),
+(4, 0.75, 4, 1, 1, 'Live', 6.40, 4.80),
+(5, 0.10, 5, 1, 1, 'Live', 2.10, 0.21);
+
+-- 15. tbl_food_menus_modifiers
+INSERT INTO `tbl_food_menus_modifiers` (`modifier_id`, `food_menu_id`, `user_id`, `outlet_id`, `company_id`, `del_status`) VALUES
+(1, 1, 1, 1, 1, 'Live'),
+(2, 2, 1, 1, 1, 'Live'),
+(3, 3, 1, 1, 1, 'Live'),
+(4, 4, 1, 1, 1, 'Live'),
+(5, 5, 1, 1, 1, 'Live');
+
+-- 16. tbl_galleries
+INSERT INTO `tbl_galleries` (`photo`, `company_id`, `del_status`) VALUES
+('restaurant_interior_1.jpg', 1, 'Live'),
+('kitchen_setup_1.jpg', 1, 'Live'),
+('outdoor_patio.jpg', 1, 'Live'),
+('signature_dish.jpg', 1, 'Live'),
+('staff_team.jpg', 1, 'Live');
+
+-- 17. tbl_holds
+INSERT INTO `tbl_holds` (`customer_id`, `sale_no`, `total_items`, `sub_total`, `paid_amount`, `due_amount`, `disc`, `disc_actual`, `vat`, `total_payable`, `payment_method_id`, `close_time`, `table_id`, `total_item_discount_amount`, `sub_total_with_discount`, `sub_total_discount_amount`, `total_discount_amount`, `charge_type`, `delivery_charge`, `tips_amount`, `tips_amount_actual_charge`, `delivery_charge_actual_charge`, `sub_total_discount_value`, `sub_total_discount_type`, `sale_date`, `date_time`, `order_time`, `cooking_start_time`, `cooking_done_time`, `modified`, `user_id`, `waiter_id`, `outlet_id`, `company_id`, `order_status`, `order_type`, `del_status`, `is_merge`, `counter_id`, `is_accept`, `given_amount`, `change_amount`, `sale_vat_objects`, `future_sale_status`, `random_code`, `is_kitchen_bell`, `del_address`, `delivery_partner_id`, `rounding_amount_hidden`, `status`, `previous_due_tmp`, `used_loyalty_point`, `split_sale_id`, `orders_table_text`, `self_order_content`, `is_self_order`, `self_order_ran_code`, `self_order_status`, `token_number`, `is_pickup_sale`, `order_receiving_id`, `pull_update`, `is_delete_sender`, `is_delete_receiver`, `is_update_sender`, `is_update_receiver`, `online_self_order_receiving_id`, `is_update_receiver_admin`, `is_delete_receiver_admin`, `order_receiving_id_admin`, `pull_update_admin`, `pull_update_cashier`, `combo_items`, `online_payment_details`, `online_order_receiving_id`, `is_invoice`, `is_kitchen`, `zatca_value`) VALUES
+('1', 'HOLD-001', 2, 40.00, 0.00, 0.00, NULL, 0.00, 5.00, 45.00, 1, '00:00:00', 1, 0, 40.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-01', NOW(), '10:00:00', '', '', 'No', 1, 3, 1, 1, 1, 1, 'Live', 0, 1, 1, 0, 0, '[]', 1, 'HOLD001', 1, NULL, NULL, 0, 'Pending', 0, 0, NULL, NULL, NULL, 'No', NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('2', 'HOLD-002', 3, 75.50, 0.00, 0.00, NULL, 0.00, 7.55, 83.05, 2, '00:00:00', 2, 0, 75.50, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-02', NOW(), '12:30:00', '', '', 'No', 2, 4, 1, 1, 1, 1, 'Live', 0, 2, 1, 0, 0, '[]', 1, 'HOLD002', 1, NULL, NULL, 0, 'Pending', 0, 0, NULL, NULL, NULL, 'No', NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('3', 'HOLD-003', 1, 150.00, 0.00, 0.00, NULL, 0.00, 15.00, 165.00, 1, '00:00:00', 3, 0, 150.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-03', NOW(), '14:00:00', '', '', 'No', 3, 5, 1, 1, 1, 1, 'Live', 0, 3, 1, 0, 0, '[]', 1, 'HOLD003', 1, NULL, NULL, 0, 'Pending', 0, 0, NULL, NULL, NULL, 'No', NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('4', 'HOLD-004', 4, 210.00, 0.00, 0.00, NULL, 0.00, 21.00, 231.00, 3, '00:00:00', 4, 0, 210.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-04', NOW(), '16:45:00', '', '', 'No', 4, 6, 1, 1, 1, 1, 'Live', 0, 4, 1, 0, 0, '[]', 1, 'HOLD004', 1, NULL, NULL, 0, 'Pending', 0, 0, NULL, NULL, NULL, 'No', NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('5', 'HOLD-005', 2, 95.00, 0.00, 0.00, NULL, 0.00, 9.50, 104.50, 1, '00:00:00', 5, 0, 95.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-05', NOW(), '19:15:00', '', '', 'No', 5, 7, 1, 1, 1, 1, 'Live', 0, 5, 1, 0, 0, '[]', 1, 'HOLD005', 1, NULL, NULL, 0, 'Pending', 0, 0, NULL, NULL, NULL, 'No', NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL);
+
+-- 18. tbl_holds_details
+INSERT INTO `tbl_holds_details` (`food_menu_id`, `menu_name`, `qty`, `tmp_qty`, `menu_price_without_discount`, `menu_price_with_discount`, `menu_unit_price`, `menu_vat_percentage`, `menu_taxes`, `menu_discount_value`, `discount_type`, `menu_note`, `menu_combo_items`, `discount_amount`, `item_type`, `cooking_status`, `cooking_start_time`, `cooking_done_time`, `previous_id`, `loyalty_point_earn`, `sales_id`, `order_status`, `user_id`, `outlet_id`, `is_free_item`, `del_status`, `discount_reason`) VALUES
+(1, 'biryani', 1, 1, 28.00, 28.00, 28.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, NULL, 1, 1, 1, 0, 'Live', ''),
+(2, 'Samosa', 2, 2, 40.00, 40.00, 20.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, NULL, 1, 1, 1, 0, 'Live', ''),
+(3, 'Burger', 1, 1, 200.00, 200.00, 200.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, NULL, 1, 1, 1, 0, 'Live', ''),
+(4, 'pizza', 1, 1, 500.00, 500.00, 500.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, NULL, 1, 1, 1, 0, 'Live', ''),
+(5, 'Seafood Platter', 1, 1, 150.00, 150.00, 150.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, NULL, 1, 1, 1, 0, 'Live', '');
+
+-- 19. tbl_holds_details_modifiers
+INSERT INTO `tbl_holds_details_modifiers` (`modifier_id`, `modifier_price`, `food_menu_id`, `sales_id`, `order_status`, `sales_details_id`, `menu_vat_percentage`, `menu_taxes`, `user_id`, `outlet_id`, `customer_id`, `is_print`, `is_merge`) VALUES
+(1, 5.00, 1, NULL, 1, 1, 0, '[]', 1, 1, 1, 1, 0),
+(2, 10.00, 2, NULL, 1, 2, 0, '[]', 1, 1, 1, 1, 0),
+(3, 15.00, 3, NULL, 1, 3, 0, '[]', 1, 1, 1, 1, 0),
+(4, 20.00, 4, NULL, 1, 4, 0, '[]', 1, 1, 1, 1, 0),
+(5, 25.00, 5, NULL, 1, 5, 0, '[]', 1, 1, 1, 1, 0);
+
+-- 20. tbl_holds_table
+INSERT INTO `tbl_holds_table` (`persons`, `booking_time`, `hold_id`, `hold_no`, `outlet_id`, `table_id`, `del_status`) VALUES
+(2, NOW(), 1, 'HOLD-001', 1, 1, 'Live'),
+(4, NOW(), 2, 'HOLD-002', 1, 2, 'Live'),
+(6, NOW(), 3, 'HOLD-003', 1, 3, 'Live'),
+(3, NOW(), 4, 'HOLD-004', 1, 4, 'Live'),
+(5, NOW(), 5, 'HOLD-005', 1, 5, 'Live');
+
+-- 21. tbl_ingredient_categories
+INSERT INTO `tbl_ingredient_categories` (`category_name`, `description`, `user_id`, `company_id`, `del_status`) VALUES
+('Produce', 'Fresh vegetables & fruits', 1, 1, 'Live'),
+('Meat & Poultry', 'Beef, chicken, lamb', 1, 1, 'Live'),
+('Dairy & Eggs', 'Milk, cheese, butter, eggs', 1, 1, 'Live'),
+('Spices & Herbs', 'Seasonings & flavorings', 1, 1, 'Live'),
+('Dry Goods', 'Flour, rice, pasta, grains', 1, 1, 'Live');
+
+-- 22. tbl_ingredients
+INSERT INTO `tbl_ingredients` (`code`, `name`, `category_id`, `purchase_price`, `alert_quantity`, `unit_id`, `user_id`, `company_id`, `del_status`, `purchase_unit_id`, `conversion_rate`, `consumption_unit_cost`, `average_consumption_per_unit`, `is_direct_food`, `food_id`, `ing_type`, `unit_type`) VALUES
+('ING-011', 'Chicken Breast', 2, 8.50, 10, 1, 1, 1, 'Live', 1, 1, 8.50, 8.50, 1, NULL, 'Plain Ingredient', 1),
+('ING-012', 'Basmati Rice', 5, 3.20, 20, 1, 1, 1, 'Live', 1, 1, 3.20, 3.20, 1, NULL, 'Plain Ingredient', 1),
+('ING-013', 'Mozzarella', 3, 6.80, 15, 1, 1, 1, 'Live', 1, 1, 6.80, 6.80, 1, NULL, 'Plain Ingredient', 1),
+('ING-014', 'Fresh Basil', 4, 1.50, 25, 1, 1, 1, 'Live', 1, 1, 1.50, 1.50, 1, NULL, 'Plain Ingredient', 1),
+('ING-015', 'All-Purpose Flour', 5, 0.80, 30, 1, 1, 1, 'Live', 1, 1, 0.80, 0.80, 1, NULL, 'Plain Ingredient', 1);
+
+-- 23. tbl_inventory_adjustment
+INSERT INTO `tbl_inventory_adjustment` (`reference_no`, `date`, `note`, `employee_id`, `user_id`, `outlet_id`, `del_status`) VALUES
+('ADJ-001', '2026-04-01', 'Monthly stock audit', 0, 1, 1, 'Live'),
+('ADJ-002', '2026-04-02', 'Damaged goods written off', 0, 1, 1, 'Live'),
+('ADJ-003', '2026-04-03', 'Excess stock counted', 0, 1, 1, 'Live'),
+('ADJ-004', '2026-04-04', 'Supplier delivery correction', 0, 1, 1, 'Live'),
+('ADJ-005', '2026-04-05', 'End of week reconciliation', 0, 1, 1, 'Live');
+
+-- 24. tbl_inventory_adjustment_ingredients
+INSERT INTO `tbl_inventory_adjustment_ingredients` (`ingredient_id`, `consumption_amount`, `inventory_adjustment_id`, `consumption_status`, `outlet_id`, `del_status`) VALUES
+(1, 5.00, 1, 'Minus', 1, 'Live'),
+(2, 10.00, 2, 'Plus', 1, 'Live'),
+(3, 2.50, 3, 'Minus', 1, 'Live'),
+(4, 8.00, 4, 'Plus', 1, 'Live'),
+(5, 3.00, 5, 'Minus', 1, 'Live');
+
+-- 25. tbl_kitchen_categories
+INSERT INTO `tbl_kitchen_categories` (`kitchen_id`, `cat_id`, `via_printer`, `del_status`, `outlet_id`) VALUES
+(1, 1, 1, 'Live', 1),
+(1, 2, 1, 'Live', 1),
+(2, 3, 1, 'Live', 1),
+(3, 4, 1, 'Live', 1),
+(4, 5, 1, 'Live', 1);
+
+-- 26. tbl_kitchens
+INSERT INTO `tbl_kitchens` (`name`, `printer_id`, `print_server_url`, `company_id`, `del_status`, `outlet_id`) VALUES
+('Main Kitchen', 1, NULL, 1, 'Live', 1),
+('Pastry Station', 2, NULL, 1, 'Live', 1),
+('Grill Section', 3, NULL, 1, 'Live', 1),
+('Cold Prep', 4, NULL, 1, 'Live', 1),
+('Bar & Drinks', 5, NULL, 1, 'Live', 1);
+
+-- 27. tbl_main_modules
+INSERT INTO `tbl_main_modules` (`name`, `del_status`) VALUES
+('dashboard', 'Live'),
+('saas', 'Live'),
+('settings', 'Live'),
+('pos', 'Live'),
+('purchase', 'Live');
+
+-- 28. tbl_modifier_ingredients
+INSERT INTO `tbl_modifier_ingredients` (`ingredient_id`, `consumption`, `modifier_id`, `user_id`, `company_id`, `cost`, `total`, `del_status`) VALUES
+(1, 0.50, 1, 1, 1, 5.50, 2.75, 'Live'),
+(2, 1.00, 2, 1, 1, 3.20, 3.20, 'Live'),
+(3, 0.25, 3, 1, 1, 8.00, 2.00, 'Live'),
+(4, 0.75, 4, 1, 1, 6.40, 4.80, 'Live'),
+(5, 0.10, 5, 1, 1, 2.10, 0.21, 'Live');
+
+-- 29. tbl_modifiers
+INSERT INTO `tbl_modifiers` (`name`, `price`, `description`, `user_id`, `company_id`, `tax_information`, `tax_string`, `total_cost`, `del_status`) VALUES
+('Extra Cheese', 5.00, 'Add premium mozzarella slice', 1, 1, '[]', '', 0.50, 'Live'),
+('Spicy Kick', 2.50, 'Add jalapeños & hot sauce', 1, 1, '[]', '', 0.00, 'Live'),
+('Gluten-Free Bun', 1.00, 'Replace standard bun', 1, 1, '[]', '', 1.00, 'Live'),
+('Double Meat', 3.50, 'Upgrade to double portion', 1, 1, '[]', '', 3.50, 'Live'),
+('Vegan Substitute', 2.00, 'Plant-based alternative', 1, 1, '[]', '', 2.00, 'Live');
+
+-- 30. tbl_multiple_currencies
+INSERT INTO `tbl_multiple_currencies` (`currency`, `conversion_rate`, `company_id`, `del_status`) VALUES
+('EUR', 0.85, 1, 'Live'),
+('GBP', 0.73, 1, 'Live'),
+('CAD', 1.35, 1, 'Live'),
+('AUD', 1.50, 1, 'Live'),
+('JPY', 110.50, 1, 'Live');
+
+-- 31. tbl_notification_bar_kitchen_panel
+INSERT INTO `tbl_notification_bar_kitchen_panel` (`notification`, `sale_id`, `kitchen_id`, `outlet_id`) VALUES
+('Order #1001 ready for pickup', 1, 1, 1),
+('Order #1002 cooking now', 2, 1, 1),
+('Order #1003 requires attention', 3, 2, 1),
+('Order #1004 dispatched to table 3', 4, 3, 1),
+('Order #1005 completed', 5, 4, 1);
+
+-- 32. tbl_notifications
+INSERT INTO `tbl_notifications` (`notification`, `sale_id`, `waiter_id`, `push_status`, `outlet_id`) VALUES
+('New table order assigned', 1, 3, 1, 1),
+('Order delayed - kitchen backup', 2, 4, 1, 1),
+('Customer request: extra napkins', 3, 5, 0, 1),
+('Payment processed successfully', 4, 3, 1, 1),
+('Table 5 ready for seating', 5, 4, 1, 1);
+
+-- 33. tbl_orders_table
+INSERT INTO `tbl_orders_table` (`persons`, `booking_time`, `sale_id`, `sale_no`, `outlet_id`, `table_id`, `del_status`) VALUES
+(2, NOW(), 1, 'ORD-001', 1, 1, 'Live'),
+(4, NOW(), 2, 'ORD-002', 1, 2, 'Live'),
+(6, NOW(), 3, 'ORD-003', 1, 3, 'Live'),
+(3, NOW(), 4, 'ORD-004', 1, 4, 'Live'),
+(5, NOW(), 5, 'ORD-005', 1, 5, 'Live');
+
+-- 34. tbl_premade_ingredients
+INSERT INTO `tbl_premade_ingredients` (`ingredient_id`, `consumption`, `pre_made_id`, `user_id`, `company_id`, `del_status`, `cost`, `total`) VALUES
+(1, 0.50, 1, 1, 1, 'Live', 4.25, 2.12),
+(2, 1.00, 2, 1, 1, 'Live', 3.20, 3.20),
+(3, 0.25, 3, 1, 1, 'Live', 1.70, 0.42),
+(4, 0.75, 4, 1, 1, 'Live', 1.12, 0.84),
+(5, 0.10, 5, 1, 1, 'Live', 0.21, 0.02);
+
+-- 35. tbl_printers
+INSERT INTO `tbl_printers` (`path`, `title`, `type`, `profile_`, `characters_per_line`, `printer_ip_address`, `printer_port`, `company_id`, `outlet_id`, `printing_choice`, `ipvfour_address`, `print_format`, `inv_qr_code_enable_status`, `open_cash_drawer_when_printing_invoice`, `del_status`) VALUES
+('192.168.1.10', 'POS Receipt 1', 'Network', '80mm', 48, '192.168.1.10', '9100', 1, 1, 'Auto', '192.168.1.10', '80mm', 'Yes', 'Yes', 'Live'),
+('192.168.1.11', 'POS Receipt 2', 'Network', '58mm', 32, '192.168.1.11', '9100', 1, 1, 'Manual', '192.168.1.11', '58mm', 'No', 'No', 'Live'),
+('USB001', 'Kitchen KOT', 'USB', '80mm', 48, NULL, NULL, 1, 1, 'Auto', NULL, '80mm', 'Yes', 'No', 'Live'),
+('USB002', 'Bar KOT', 'USB', '58mm', 32, NULL, NULL, 1, 1, 'Manual', NULL, '58mm', 'No', 'No', 'Live'),
+('BT001', 'Mobile POS', 'Bluetooth', '80mm', 48, NULL, NULL, 1, 1, 'Auto', NULL, '80mm', 'Yes', 'Yes', 'Live');
+
+-- 36. tbl_production
+INSERT INTO `tbl_production` (`reference_no`, `date`, `user_id`, `outlet_id`, `del_status`, `status`) VALUES
+('PRD-001', '2026-04-01', 1, 1, 'Live', 1),
+('PRD-002', '2026-04-02', 1, 1, 'Live', 1),
+('PRD-003', '2026-04-03', 1, 1, 'Live', 1),
+('PRD-004', '2026-04-04', 1, 1, 'Live', 1),
+('PRD-005', '2026-04-05', 1, 1, 'Live', 1);
+
+-- 37. tbl_production_ingredients
+INSERT INTO `tbl_production_ingredients` (`ingredient_id`, `quantity_amount`, `production_id`, `outlet_id`, `del_status`, `status`) VALUES
+(1, 10.00, 1, 1, 'Live', 1),
+(2, 5.00, 2, 1, 'Live', 1),
+(3, 8.00, 3, 1, 'Live', 1),
+(4, 3.00, 4, 1, 'Live', 1),
+(5, 12.00, 5, 1, 'Live', 1);
+
+-- 38. tbl_promotions
+INSERT INTO `tbl_promotions` (`title`, `start_date`, `end_date`, `type`, `food_menu_id`, `qty`, `get_food_menu_id`, `get_qty`, `discount`, `status`, `outlet_id`, `user_id`, `company_id`, `promotion_code`, `del_status`) VALUES
+('Weekend Special', '2026-04-01', '2026-04-30', 1, '1', 2, '2', 1, '50', 1, 1, 1, 1, 'WKEND26', 'Live'),
+('Happy Hour Drinks', '2026-04-01', '2026-04-07', 2, '5', 3, NULL, NULL, '30', 1, 1, 1, 1, 'HAPPY26', 'Live'),
+('Family Bundle', '2026-04-01', '2026-04-15', 3, '2', 1, '4', 1, '20', 1, 1, 1, 1, 'FAM26', 'Live'),
+('Early Bird', '2026-04-01', '2026-04-10', 1, '3', 1, NULL, NULL, '15', 1, 1, 1, 1, 'EARLY26', 'Live'),
+('Student Night', '2026-04-05', '2026-04-12', 1, '4', 1, NULL, NULL, '25', 1, 1, 1, 1, 'STU26', 'Live');
+
+-- 39. tbl_purchase
+INSERT INTO `tbl_purchase` (`reference_no`, `supplier_id`, `date`, `subtotal`, `other`, `grand_total`, `paid`, `due`, `note`, `user_id`, `outlet_id`, `payment_id`, `del_status`) VALUES
+('PUR-001', 1, '2026-04-01', 1200.00, 50.00, 1250.00, 1250.00, 0.00, 'Weekly produce order', 1, 1, 1, 'Live'),
+('PUR-002', 2, '2026-04-02', 850.00, 0.00, 850.00, 850.00, 0.00, 'Meat & poultry delivery', 1, 1, 2, 'Live'),
+('PUR-003', 3, '2026-04-03', 450.00, 25.00, 475.00, 475.00, 0.00, 'Dairy & cheese restock', 1, 1, 1, 'Live'),
+('PUR-004', 4, '2026-04-04', 320.00, 0.00, 320.00, 320.00, 0.00, 'Spices & seasonings', 1, 1, 3, 'Live'),
+('PUR-005', 5, '2026-04-05', 180.00, 15.00, 195.00, 195.00, 0.00, 'Dry goods & grains', 1, 1, 1, 'Live');
+
+-- 40. tbl_purchase_ingredients
+INSERT INTO `tbl_purchase_ingredients` (`ingredient_id`, `unit_price`, `quantity_amount`, `total`, `purchase_id`, `outlet_id`, `del_status`, `cost_per_unit`) VALUES
+(1, 8.50, 50, 425.00, 1, 1, 'Live', 8.50),
+(2, 3.20, 100, 320.00, 2, 1, 'Live', 3.20),
+(3, 6.80, 30, 204.00, 3, 1, 'Live', 6.80),
+(4, 1.50, 25, 37.50, 4, 1, 'Live', 1.50),
+(5, 0.80, 50, 40.00, 5, 1, 'Live', 0.80);
+
+-- 41. tbl_register
+INSERT INTO `tbl_register` (`opening_balance`, `opening_details`, `closing_balance`, `opening_balance_date_time`, `closing_balance_date_time`, `sale_paid_amount`, `refund_amount`, `customer_due_receive`, `payment_methods_sale`, `register_status`, `others_currency`, `total_purchase`, `total_due_payment`, `total_expense`, `user_id`, `outlet_id`, `company_id`, `counter_id`) VALUES
+(500.00, '{"1":{"Cash":"500"}}', 1250.00, NOW(), NOW(), 750.00, 0.00, 0.00, '{"1":"750.00"}', 2, NULL, 0.00, 0.00, 0.00, 1, 1, 1, 1),
+(600.00, '{"2":{"Card":"600"}}', 1400.00, NOW(), NOW(), 800.00, 0.00, 0.00, '{"2":"800.00"}', 2, NULL, 0.00, 0.00, 0.00, 2, 1, 1, 2),
+(450.00, '{"3":{"Mobile":"450"}}', 1100.00, NOW(), NOW(), 650.00, 0.00, 0.00, '{"3":"650.00"}', 2, NULL, 0.00, 0.00, 0.00, 3, 1, 1, 3),
+(700.00, '{"4":{"Cash":"700"}}', 1550.00, NOW(), NOW(), 850.00, 0.00, 0.00, '{"4":"850.00"}', 2, NULL, 0.00, 0.00, 0.00, 4, 1, 1, 4),
+(550.00, '{"5":{"Card":"550"}}', 1300.00, NOW(), NOW(), 750.00, 0.00, 0.00, '{"5":"750.00"}', 2, NULL, 0.00, 0.00, 0.00, 5, 1, 1, 5);
+
+-- 42. tbl_reservations
+INSERT INTO `tbl_reservations` (`company_id`, `outlet_id`, `name`, `phone`, `email`, `number_of_guest`, `reservation_date`, `reservation_time`, `notes`, `reservation_type`, `special_request`, `status`, `del_status`, `reservation_order_receiving_id`) VALUES
+(1, 1, 'Alice Johnson', '+1555010101', 'alice@email.com', 4, '2026-04-06', '18:30:00', 'Anniversary dinner', 'Dine-in', 'Window table preferred', 'Confirmed', 'Live', 0),
+(1, 1, 'Bob Williams', '+1555010102', 'bob@email.com', 6, '2026-04-07', '19:00:00', 'Business meeting', 'Dine-in', 'Quiet area requested', 'Pending', 'Live', 0),
+(1, 1, 'Carol Davis', '+1555010103', 'carol@email.com', 2, '2026-04-08', '20:00:00', 'Date night', 'Dine-in', 'Romantic setup', 'Confirmed', 'Live', 0),
+(1, 1, 'David Miller', '+1555010104', 'david@email.com', 8, '2026-04-09', '17:30:00', 'Family reunion', 'Dine-in', 'Large table required', 'Pending', 'Live', 0),
+(1, 1, 'Eva Brown', '+1555010105', 'eva@email.com', 3, '2026-04-10', '19:30:00', 'Birthday celebration', 'Dine-in', 'Cake storage needed', 'Confirmed', 'Live', 0);
+
+-- 43. tbl_role_access
+INSERT INTO `tbl_role_access` (`role_id`, `access_parent_id`, `access_child_id`, `del_status`) VALUES
+(1, 1, 1, 'Live'),
+(2, 2, 2, 'Live'),
+(3, 3, 3, 'Live'),
+(4, 4, 4, 'Live'),
+(5, 5, 5, 'Live');
+
+-- 44. tbl_roles
+INSERT INTO `tbl_roles` (`role_name`, `del_status`, `company_id`) VALUES
+('Administrator', 'Live', 1),
+('Manager', 'Live', 1),
+('Supervisor', 'Live', 1),
+('Cashier', 'Live', 1),
+('Waiter', 'Live', 1);
+
+-- 45. tbl_running_order_tables
+INSERT INTO `tbl_running_order_tables` (`table_content`, `del_status`, `sale_no`, `table_id`, `outlet_id`, `persons`, `company_id`) VALUES
+('{"table_id":"1","sale_no":"RUN-001"}', 'Live', 'RUN-001', 1, 1, 2, 1),
+('{"table_id":"2","sale_no":"RUN-002"}', 'Live', 'RUN-002', 2, 1, 4, 1),
+('{"table_id":"3","sale_no":"RUN-003"}', 'Live', 'RUN-003', 3, 1, 6, 1),
+('{"table_id":"4","sale_no":"RUN-004"}', 'Live', 'RUN-004', 4, 1, 3, 1),
+('{"table_id":"5","sale_no":"RUN-005"}', 'Live', 'RUN-005', 5, 1, 5, 1);
+
+-- 46. tbl_running_orders
+INSERT INTO `tbl_running_orders` (`order_content`, `user_id`, `del_status`, `sale_no`) VALUES
+('{"items":[{"id":1,"qty":2}]}', 1, 'Live', 'RUN-001'),
+('{"items":[{"id":2,"qty":1}]}', 2, 'Live', 'RUN-002'),
+('{"items":[{"id":3,"qty":3}]}', 3, 'Live', 'RUN-003'),
+('{"items":[{"id":4,"qty":1}]}', 4, 'Live', 'RUN-004'),
+('{"items":[{"id":5,"qty":2}]}', 5, 'Live', 'RUN-005');
+
+-- 47. tbl_sale_consumptions
+INSERT INTO `tbl_sale_consumptions` (`sale_id`, `order_status`, `user_id`, `outlet_id`, `del_status`) VALUES
+(1, 1, 1, 1, 'Live'),
+(2, 1, 1, 1, 'Live'),
+(3, 1, 1, 1, 'Live'),
+(4, 1, 1, 1, 'Live'),
+(5, 1, 1, 1, 'Live');
+
+-- 48. tbl_sale_consumptions_of_menus
+INSERT INTO `tbl_sale_consumptions_of_menus` (`ingredient_id`, `consumption`, `sale_consumption_id`, `sales_id`, `order_status`, `food_menu_id`, `user_id`, `outlet_id`, `del_status`, `cost`, `status`, `production_id`) VALUES
+(1, 0.50, 1, 1, 1, 1, 1, 1, 'Live', 4.25, 1, NULL),
+(2, 1.00, 2, 2, 1, 2, 1, 1, 'Live', 3.20, 1, NULL),
+(3, 0.25, 3, 3, 1, 3, 1, 1, 'Live', 1.70, 1, NULL),
+(4, 0.75, 4, 4, 1, 4, 1, 1, 'Live', 5.10, 1, NULL),
+(5, 0.10, 5, 5, 1, 5, 1, 1, 'Live', 0.21, 1, NULL);
+
+-- 49. tbl_sale_consumptions_of_modifiers_of_menus
+INSERT INTO `tbl_sale_consumptions_of_modifiers_of_menus` (`ingredient_id`, `consumption`, `sale_consumption_id`, `sales_id`, `order_status`, `food_menu_id`, `user_id`, `outlet_id`, `del_status`, `cost`) VALUES
+(1, 0.20, 1, 1, 1, 1, 1, 1, 'Live', 1.10),
+(2, 0.40, 2, 2, 1, 2, 1, 1, 'Live', 1.28),
+(3, 0.10, 3, 3, 1, 3, 1, 1, 'Live', 0.80),
+(4, 0.30, 4, 4, 1, 4, 1, 1, 'Live', 1.92),
+(5, 0.05, 5, 5, 1, 5, 1, 1, 'Live', 0.10);
+
+-- 50. tbl_sale_payments
+INSERT INTO `tbl_sale_payments` (`payment_id`, `currency_type`, `loyalty_rate`, `multi_currency`, `multi_currency_rate`, `amount`, `usage_point`, `sale_id`, `date_time`, `del_status`, `counter_id`, `user_id`, `outlet_id`, `payment_name`) VALUES
+(1, NULL, NULL, NULL, NULL, 45.00, NULL, 1, NOW(), 'Live', 1, 1, 1, 'Cash'),
+(2, NULL, NULL, NULL, NULL, 83.05, NULL, 2, NOW(), 'Live', 2, 2, 1, 'Credit Card'),
+(3, NULL, NULL, NULL, NULL, 165.00, NULL, 3, NOW(), 'Live', 3, 3, 1, 'Mobile Wallet'),
+(4, NULL, NULL, NULL, NULL, 231.00, NULL, 4, NOW(), 'Live', 4, 4, 1, 'Cash'),
+(5, NULL, NULL, NULL, NULL, 104.50, NULL, 5, NOW(), 'Live', 5, 5, 1, 'Debit Card');
+
+-- 51. tbl_sales
+INSERT INTO `tbl_sales` (`customer_id`, `sale_no`, `total_items`, `sub_total`, `paid_amount`, `due_amount`, `disc`, `disc_actual`, `vat`, `total_payable`, `payment_method_id`, `close_time`, `table_id`, `total_item_discount_amount`, `sub_total_with_discount`, `sub_total_discount_amount`, `total_discount_amount`, `charge_type`, `delivery_charge`, `tips_amount`, `tips_amount_actual_charge`, `delivery_charge_actual_charge`, `sub_total_discount_value`, `sub_total_discount_type`, `sale_date`, `date_time`, `order_time`, `cooking_start_time`, `cooking_done_time`, `modified`, `user_id`, `waiter_id`, `outlet_id`, `company_id`, `order_status`, `order_type`, `del_status`, `zatca_value`, `counter_id`, `given_amount`, `change_amount`, `sale_vat_objects`, `future_sale_status`, `random_code`, `is_kitchen_bell`, `is_self_order`, `self_order_ran_code`, `self_order_status`, `token_number`, `is_pickup_sale`, `order_receiving_id`, `pull_update`, `is_delete_sender`, `is_delete_receiver`, `is_update_sender`, `is_update_receiver`, `online_self_order_receiving_id`, `is_update_receiver_admin`, `is_delete_receiver_admin`, `order_receiving_id_admin`, `pull_update_admin`, `pull_update_cashier`, `combo_items`, `online_payment_details`, `online_order_receiving_id`, `is_invoice`, `is_kitchen`, `zatca_value`) VALUES
+('1', 'SALE-001', 2, 40.00, 45.00, 0.00, NULL, 0.00, 5.00, 45.00, 1, '14:00:00', 1, 0, 40.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-01', NOW(), '10:00:00', '', '', 'No', 1, 3, 1, 1, 3, 1, 'Live', NULL, 1, 45.00, 0.00, '[]', 1, 'SALE001', 1, 0, NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('2', 'SALE-002', 3, 75.50, 83.05, 0.00, NULL, 0.00, 7.55, 83.05, 2, '14:30:00', 2, 0, 75.50, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-02', NOW(), '12:30:00', '', '', 'No', 2, 4, 1, 1, 3, 1, 'Live', NULL, 2, 83.05, 0.00, '[]', 1, 'SALE002', 1, 0, NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('3', 'SALE-003', 1, 150.00, 165.00, 0.00, NULL, 0.00, 15.00, 165.00, 1, '15:00:00', 3, 0, 150.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-03', NOW(), '14:00:00', '', '', 'No', 3, 5, 1, 1, 3, 1, 'Live', NULL, 3, 165.00, 0.00, '[]', 1, 'SALE003', 1, 0, NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('4', 'SALE-004', 4, 210.00, 231.00, 0.00, NULL, 0.00, 21.00, 231.00, 3, '15:30:00', 4, 0, 210.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-04', NOW(), '16:45:00', '', '', 'No', 4, 6, 1, 1, 3, 1, 'Live', NULL, 4, 231.00, 0.00, '[]', 1, 'SALE004', 1, 0, NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL),
+('5', 'SALE-005', 2, 95.00, 104.50, 0.00, NULL, 0.00, 9.50, 104.50, 1, '16:00:00', 5, 0, 95.00, 0, 0, 'service', '', '', 0, 0, '', 'fixed', '2026-04-05', NOW(), '19:15:00', '', '', 'No', 5, 7, 1, 1, 3, 1, 'Live', NULL, 5, 104.50, 0.00, '[]', 1, 'SALE005', 1, 0, NULL, 'Pending', NULL, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL, NULL, 0, 0, 1, NULL);
+
+-- 52. tbl_sales_details
+INSERT INTO `tbl_sales_details` (`food_menu_id`, `menu_name`, `qty`, `tmp_qty`, `menu_price_without_discount`, `menu_price_with_discount`, `menu_unit_price`, `menu_vat_percentage`, `menu_taxes`, `menu_discount_value`, `discount_type`, `menu_note`, `menu_combo_items`, `discount_amount`, `item_type`, `cooking_status`, `cooking_start_time`, `cooking_done_time`, `previous_id`, `loyalty_point_earn`, `sales_id`, `order_status`, `user_id`, `outlet_id`, `is_free_item`, `del_status`, `discount_reason`) VALUES
+(1, 'biryani', 1, 1, 28.00, 28.00, 28.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, 1, 3, 1, 1, 0, 'Live', ''),
+(2, 'Samosa', 2, 2, 40.00, 40.00, 20.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, 2, 3, 1, 1, 0, 'Live', ''),
+(3, 'Burger', 1, 1, 200.00, 200.00, 200.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, 3, 3, 1, 1, 0, 'Live', ''),
+(4, 'pizza', 1, 1, 500.00, 500.00, 500.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, 4, 3, 1, 1, 0, 'Live', ''),
+(5, 'Seafood Platter', 1, 1, 150.00, 150.00, 150.00, 0, '[]', '', 'fixed', '', '', 0, 'Kitchen Item', 'New', '', '', 0, 0, 5, 3, 1, 1, 0, 'Live', '');
+
+-- 53. tbl_sales_details_modifiers
+INSERT INTO `tbl_sales_details_modifiers` (`modifier_id`, `modifier_price`, `food_menu_id`, `sales_id`, `order_status`, `sales_details_id`, `menu_vat_percentage`, `menu_taxes`, `user_id`, `outlet_id`, `customer_id`) VALUES
+(1, 5.00, 1, 1, 3, 1, 0, '[]', 1, 1, 1),
+(2, 10.00, 2, 2, 3, 2, 0, '[]', 1, 1, 1),
+(3, 15.00, 3, 3, 3, 3, 0, '[]', 1, 1, 1),
+(4, 20.00, 4, 4, 3, 4, 0, '[]', 1, 1, 1),
+(5, 25.00, 5, 5, 3, 5, 0, '[]', 1, 1, 1);
+
+-- 54. tbl_supplier_payments
+INSERT INTO `tbl_supplier_payments` (`date`, `supplier_id`, `amount`, `note`, `user_id`, `outlet_id`, `del_status`, `counter_id`, `payment_id`, `added_date_time`) VALUES
+('2026-04-01', 1, 1250.00, 'Payment for weekly produce', 1, 1, 'Live', 1, 1, NOW()),
+('2026-04-02', 2, 850.00, 'Meat & poultry invoice', 1, 1, 'Live', 2, 2, NOW()),
+('2026-04-03', 3, 475.00, 'Dairy delivery settlement', 1, 1, 'Live', 3, 1, NOW()),
+('2026-04-04', 4, 320.00, 'Spices & seasonings', 1, 1, 'Live', 4, 3, NOW()),
+('2026-04-05', 5, 195.00, 'Dry goods & grains', 1, 1, 'Live', 5, 1, NOW());
+
+-- 55. tbl_suppliers
+INSERT INTO `tbl_suppliers` (`name`, `contact_person`, `phone`, `email`, `address`, `description`, `user_id`, `company_id`, `del_status`, `added_date`) VALUES
+('Fresh Harvest Farms', 'Michael Green', '+1555020201', 'michael@harvest.com', '123 Farm Rd, Valley', 'Organic produce & vegetables', 1, 1, 'Live', NOW()),
+('Prime Meats Co', 'Sarah White', '+1555020202', 'sarah@primemeats.com', '456 Slaughter Ave, Town', 'Premium cuts & poultry', 1, 1, 'Live', NOW()),
+('Golden Dairy Ltd', 'Robert Brown', '+1555020203', 'robert@goldendairy.com', '789 Milk St, County', 'Fresh milk, cheese & yogurt', 1, 1, 'Live', NOW()),
+('Spice Masters Inc', 'Emily Davis', '+1555020204', 'emily@spicemasters.com', '321 Herb Ln, District', 'Exotic & local spices', 1, 1, 'Live', NOW()),
+('Grain & Flour Co', 'David Wilson', '+1555020205', 'david@grainflour.com', '654 Wheat Blvd, Region', 'Flour, rice & dry goods', 1, 1, 'Live', NOW());
+
+-- 56. tbl_tables
+INSERT INTO `tbl_tables` (`area`, `name`, `sit_capacity`, `position`, `description`, `user_id`, `outlet_id`, `company_id`, `del_status`, `is_setting`) VALUES
+(1, 'Table A1', '4', 'Window Side', 'Quiet dining area', 1, 1, 1, 'Live', 1),
+(2, 'Table B2', '6', 'Center Aisle', 'Family friendly zone', 1, 1, 1, 'Live', 1),
+(3, 'Table C3', '2', 'Bar Adjacent', 'Intimate setting', 1, 1, 1, 'Live', 1),
+(4, 'Table D4', '8', 'Patio Outdoor', 'Garden seating area', 1, 1, 1, 'Live', 1),
+(5, 'Table E5', '10', 'VIP Room', 'Private event space', 1, 1, 1, 'Live', 1);
+
+-- 57. tbl_transfer
+INSERT INTO `tbl_transfer` (`transfer_type`, `reference_no`, `date`, `received_date`, `note_for_sender`, `note_for_receiver`, `user_id`, `outlet_id`, `from_outlet_id`, `to_outlet_id`, `status`, `del_status`) VALUES
+(1, 'TRF-001', '2026-04-01', '2026-04-01', 'Send extra stock', 'Received as requested', 1, 1, 1, 2, 1, 'Live'),
+(1, 'TRF-002', '2026-04-02', '2026-04-02', 'Replenish dry goods', 'Stock updated', 1, 1, 2, 1, 1, 'Live'),
+(1, 'TRF-003', '2026-04-03', '2026-04-03', 'Transfer dairy items', 'Inventory balanced', 1, 1, 1, 3, 1, 'Live'),
+(1, 'TRF-004', '2026-04-04', '2026-04-04', 'Send spices batch', 'Received & logged', 1, 1, 3, 2, 1, 'Live'),
+(1, 'TRF-005', '2026-04-05', '2026-04-05', 'Restock beverages', 'Stock level adjusted', 1, 1, 2, 3, 1, 'Live');
+
+-- 58. tbl_transfer_ingredients
+INSERT INTO `tbl_transfer_ingredients` (`transfer_type`, `status`, `ingredient_id`, `quantity_amount`, `unit_price`, `transfer_id`, `from_outlet_id`, `to_outlet_id`, `total_cost`, `del_status`) VALUES
+(1, 1, 1, 10.00, 8.50, 1, 1, 2, 85.00, 'Live'),
+(1, 1, 2, 5.00, 3.20, 2, 2, 1, 16.00, 'Live'),
+(1, 1, 3, 8.00, 6.80, 3, 1, 3, 54.40, 'Live'),
+(1, 1, 4, 3.00, 1.50, 4, 3, 2, 4.50, 'Live'),
+(1, 1, 5, 12.00, 0.80, 5, 2, 3, 9.60, 'Live');
+
+-- 59. tbl_transfer_received_ingredients
+INSERT INTO `tbl_transfer_received_ingredients` (`transfer_type`, `status`, `ingredient_id`, `quantity_amount`, `unit_price`, `transfer_id`, `from_outlet_id`, `to_outlet_id`, `total_cost`, `del_status`) VALUES
+(1, 1, 1, 10.00, 8.50, 1, 1, 2, 85.00, 'Live'),
+(1, 1, 2, 5.00, 3.20, 2, 2, 1, 16.00, 'Live'),
+(1, 1, 3, 8.00, 6.80, 3, 1, 3, 54.40, 'Live'),
+(1, 1, 4, 3.00, 1.50, 4, 3, 2, 4.50, 'Live'),
+(1, 1, 5, 12.00, 0.80, 5, 2, 3, 9.60, 'Live');
+
+-- 60. tbl_units
+INSERT INTO `tbl_units` (`unit_name`, `description`, `company_id`, `del_status`) VALUES
+('pcs', 'Pieces count', 1, 'Live'),
+('kg', 'Kilograms', 1, 'Live'),
+('ltr', 'Liters', 1, 'Live'),
+('box', 'Standard boxes', 1, 'Live'),
+('case', 'Bulk cases', 1, 'Live');
+
+-- 61. tbl_user_menu_access
+INSERT INTO `tbl_user_menu_access` (`menu_id`, `user_id`) VALUES
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
+
+-- 62. tbl_waste_ingredients
+INSERT INTO `tbl_waste_ingredients` (`ingredient_id`, `waste_amount`, `last_purchase_price`, `loss_amount`, `waste_id`, `outlet_id`, `del_status`) VALUES
+(1, 2.00, 8.50, 17.00, 1, 1, 'Live'),
+(2, 1.50, 3.20, 4.80, 2, 1, 'Live'),
+(3, 3.00, 6.80, 20.40, 3, 1, 'Live'),
+(4, 1.00, 1.50, 1.50, 4, 1, 'Live'),
+(5, 4.00, 0.80, 3.20, 5, 1, 'Live');
+
+-- 63. tbl_wastes
+INSERT INTO `tbl_wastes` (`reference_no`, `date`, `total_loss`, `note`, `employee_id`, `user_id`, `outlet_id`, `del_status`, `food_menu_id`, `food_menu_waste_qty`) VALUES
+('WST-001', '2026-04-01', 46.90, 'Weekly spoilage report', 0, 1, 1, 'Live', NULL, NULL),
+('WST-002', '2026-04-02', 15.20, 'Kitchen preparation waste', 0, 1, 1, 'Live', NULL, NULL),
+('WST-003', '2026-04-03', 35.60, 'Expired stock disposal', 0, 1, 1, 'Live', NULL, NULL),
+('WST-004', '2026-04-04', 10.30, 'Over-portioned items', 0, 1, 1, 'Live', NULL, NULL),
+('WST-005', '2026-04-05', 22.40, 'Damaged packaging waste', 0, 1, 1, 'Live', NULL, NULL);

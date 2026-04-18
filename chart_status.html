@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Circle Chart - Status Check</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 1px 62px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2C2416;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+        .header p {
+            color: #7A7A7A;
+            margin: 0;
+        }
+        .status-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 1px 62px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 30px;
+        }
+        .status-box h2 {
+            color: #2C2416;
+            font-size: 20px;
+            margin: 0 0 20px 0;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #F2ECDE;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            color: #6E665A;
+            font-weight: 500;
+        }
+        .status-value {
+            color: #2C2416;
+            font-weight: 600;
+        }
+        .status-ok {
+            color: #96CF6E;
+        }
+        .status-error {
+            color: #CF6E6E;
+        }
+        .status-warning {
+            color: #CFB06E;
+        }
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            box-shadow: 0px 1px 62px 10px rgba(0, 0, 0, 0.03);
+            border-radius: 20px;
+            padding: 24px 28px 28px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            color: #2C2416;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 32px;
+        }
+        #chart-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+        .last-updated {
+            margin-top: 12px;
+            color: #7A7A7A;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 18px;
+            text-align: center;
+        }
+        .legend {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4.5px;
+        }
+        .legend-text {
+            color: #2C2416;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 24px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #887E72;
+        }
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: #6E665A;
+        }
+        .empty-state p {
+            margin: 0;
+            font-size: 14px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 14px;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(40deg, #2C2416 0%, rgba(44, 36, 22, 0.90) 30%, rgba(44, 36, 22, 0.60) 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: white;
+            color: #2C2416;
+            border: 1px solid #E7DDCC;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .json-output {
+            background: #F8F6F2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7A7A7A;
+        }
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔍 Semi-Circle Chart Status Check</h1>
+            <p>This page checks if your chart has the necessary data and helps you fix it if it doesn't.</p>
+        </div>
+
+        <!-- Status Check -->
+        <div class="status-box" id="statusBox">
+            <h2>Database Status</h2>
+            <div class="loading">Checking database connection and data</div>
+        </div>
+
+        <!-- Chart Preview -->
+        <div class="chart-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Top Categories</div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="color: #2C2416; font-size: 14px; font-weight: 600;">Last Month</div>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2.51465 4.77148L7.75724 10.0141L12.9998 4.77148" stroke="#2C2416" stroke-width="1.74753" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div id="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+                <div class="last-updated" id="lastUpdated">Last Updated on <span id="currentDate"></span></div>
+                <div class="legend" id="legend"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">JSON Data from API</div>
+                </div>
+                <div id="jsonOutput" class="json-output">
+                    <div class="loading">Loading data</div>
+                </div>
+                <div class="action-buttons">
+                    <a href="insert_sample_data.php" class="btn btn-primary" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 3.33333V12.6667M3.33333 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Insert Sample Data
+                    </a>
+                    <button onclick="refreshData()" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M1.33333 8C1.33333 4.318 4.318 1.33333 8 1.33333C10.28 1.33333 12.2933 2.48667 13.4667 4.26667M14.6667 8C14.6667 11.682 11.682 14.6667 8 14.6667C5.72 14.6667 3.70667 13.5133 2.53333 11.7333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Quick Links</div>
+            </div>
+            <div class="action-buttons">
+                <a href="get_categories.php" class="btn btn-secondary" target="_blank">
+                    View Raw JSON Data
+                </a>
+                <a href="semi_circle_chart_card.html" class="btn btn-secondary" target="_blank">
+                    Standalone Chart
+                </a>
+                <a href="Dashboard/dashboard" class="btn btn-primary" target="_blank">
+                    Main Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Color palette for categories
+        const categoryColors = [
+            '#96CF6E',  // Green
+            '#CFB06E',  // Gold
+            '#CF8B6E',  // Orange
+            '#CF6E6E',  // Red
+            '#6E9ECF',  // Blue
+            '#9E6ECF',  // Purple
+            '#CF6E9E',  // Pink
+            '#6ECFCF'   // Teal
+        ];
+
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
+
+        // Fetch and display data
+        async function fetchAndRenderChart() {
+            try {
+                const response = await fetch('get_categories.php');
+                const result = await response.json();
+
+                // Display JSON output
+                document.getElementById('jsonOutput').textContent = JSON.stringify(result, null, 2);
+
+                // Check if data exists
+                if (!result.success || !result.data || result.data.length === 0) {
+                    showEmptyState();
+                    updateStatusBox(false, 'No data found. Click "Insert Sample Data" to add test data.');
+                    return;
+                }
+
+                // Data exists - render chart
+                updateStatusBox(true, `Found ${result.data.length} categories with ${result.total} total items sold.`);
+                renderChart(result.data, result.total);
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('jsonOutput').textContent = 'Error: ' + error.message;
+                showEmptyState();
+                updateStatusBox(false, 'Error connecting to database. Check your database credentials.');
+            }
+        }
+
+        function renderChart(data, total) {
+            const labels = data.map(item => item.category_name);
+            const values = data.map(item => item.totalQty);
+            const backgroundColors = labels.map((_, index) => categoryColors[index % categoryColors.length]);
+
+            // Clear and create chart
+            const ctx = document.getElementById('chart');
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+
+            window.myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 0,
+                        borderRadius: 20,
+                        spacing: 6
+                    }]
+                },
+                options: {
+                    rotation: -90,
+                    circumference: 180,
+                    cutout: '80%',
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        },
+                        beforeDraw: function(chart) {
+                            const ctx = chart.ctx;
+                            const width = chart.width;
+                            const height = chart.height;
+                            ctx.save();
+
+                            ctx.font = "bold 24px DM Sans";
+                            ctx.fillStyle = "#242424";
+                            ctx.textAlign = "center";
+                            ctx.textBaseline = "middle";
+
+                            const centerX = width / 2;
+                            const centerY = height * 0.4;
+
+                            ctx.fillText(`Progress ${total}`, centerX, centerY);
+
+                            ctx.restore();
+                        }
+                    }
+                }
+            });
+
+            // Update legend
+            updateLegend(data, backgroundColors, total);
+        }
+
+        function updateLegend(data, colors, total) {
+            const legendContainer = document.getElementById('legend');
+            legendContainer.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const percentage = total > 0 ? ((item.totalQty / total) * 100).toFixed(0) : 0;
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <div class="legend-dot" style="background: ${colors[index]};"></div>
+                    <div class="legend-text">${item.category_name} ${percentage}%</div>
+                `;
+
+                if (index % 2 === 0) {
+                    const row = document.createElement('div');
+                    row.className = 'legend-row';
+                    row.appendChild(legendItem);
+                    legendContainer.appendChild(row);
+                } else {
+                    const lastRow = legendContainer.lastElementChild;
+                    lastRow.appendChild(legendItem);
+                }
+            });
+        }
+
+        function showEmptyState() {
+            const container = document.getElementById('chart-container');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v4M12 16h.01"/>
+                    </svg>
+                    <h3>No Data Available</h3>
+                    <p>No category data found for the current month</p>
+                </div>
+            `;
+            document.getElementById('legend').innerHTML = `
+                <div style="text-align: center; padding: 20px; color: #887E72; font-size: 14px;">
+                    No category data available
+                </div>
+            `;
+        }
+
+        function updateStatusBox(isSuccess, message) {
+            const statusBox = document.getElementById('statusBox');
+            const statusClass = isSuccess ? 'status-ok' : 'status-error';
+            const icon = isSuccess ? '✓' : '✗';
+            
+            statusBox.innerHTML = `
+                <h2>Database Status</h2>
+                <div class="status-item">
+                    <span class="status-label">Connection</span>
+                    <span class="status-value ${statusClass}">${icon} ${isSuccess ? 'Connected' : 'Failed'}</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Data Status</span>
+                    <span class="status-value ${statusClass}">${message}</span>
+                </div>
+                ${!isSuccess ? `
+                <div class="action-buttons">
+                    <a href="insert_sample_data.php" class="btn btn-primary" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 3.33333V12.6667M3.33333 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Insert Sample Data Now
+                    </a>
+                    <a href="test_categories.php" class="btn btn-secondary" target="_blank">
+                        View Detailed Diagnostics
+                    </a>
+                </div>
+                ` : ''}
+            `;
+        }
+
+        function refreshData() {
+            document.getElementById('jsonOutput').innerHTML = '<div class="loading">Loading data</div>';
+            fetchAndRenderChart();
+        }
+
+        // Initial load
+        fetchAndRenderChart();
+    </script>
+</body>
+</html>
