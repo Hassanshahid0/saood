@@ -91,15 +91,21 @@
         padding: 0 12px;
     }
     .sales-modern-card .top-left-item, .sales-modern-card .top-right-item {
-        padding: 14px 16px;
+        padding: 18px 24px;
         margin: 0;
         border-bottom: 1px solid rgba(231, 221, 204, 0.4);
+        background: #fff;
     }
     .sales-modern-card .top-left-item {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 20px;
         flex-wrap: wrap;
+    }
+    .sales-modern-card .top-right-item {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
     .sales-modern-card .dataTables_length label,
     .sales-modern-card .dataTables_filter label {
@@ -107,32 +113,89 @@
         font-size: 13px;
         color: #6E665A;
         font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
     }
     .sales-modern-card .dataTables_filter input,
     .sales-modern-card .dataTables_length select {
         border: 1px solid rgba(231, 221, 204, 0.9);
         border-radius: 8px;
-        min-height: 34px;
+        min-height: 42px;
         font-size: 13px;
+        padding: 0 12px;
+        background: #fff;
     }
-    .sales-modern-card .dt-buttons .dt-button {
+    .sales-modern-card .dt-buttons .dt-button,
+    .sales-modern-card .btn_list,
+    .sales-modern-card .toggleBtn {
         border-radius: 8px !important;
+        min-height: 42px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+    .sales-modern-card .btn_list[data-access="exportDailySales-123"] {
+        background: #5C523A !important;
+        border-color: #5C523A !important;
+        color: #fff !important;
+    }
+    .sales-modern-card .btn_list[data-access="resetDailySales-123"] {
+        background: #fff !important;
+        border: 1px solid rgba(231, 221, 204, 0.9) !important;
+        color: #524934 !important;
+    }
+    .sales-modern-card .toggleBtn {
+        background: #fff !important;
+        border: 1px solid rgba(231, 221, 204, 0.9) !important;
+        color: #524934 !important;
+    }
+    .sales-modern-card .toggleBtn svg {
+        width: 14px;
+        height: 14px;
+    }
+    .sales-modern-card .left-btn-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .sales-modern-card .right-btn-box {
+        margin-left: 0 !important;
+    }
+    .sales-modern-card .table-box .table-responsive {
+        border-top: 1px solid rgba(231, 221, 204, 0.4);
     }
     .sales-modern-card table.dataTable thead th {
         background: #FAFAF9 !important;
         color: #524934;
         font-size: 13px;
         font-weight: 600;
-        border-bottom: 1px solid rgba(231, 221, 204, 0.4) !important;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.3) !important;
+        padding: 14px 20px !important;
     }
     .sales-modern-card table.dataTable tbody td {
         font-size: 13px;
         color: #1C1A16;
         border-bottom: 1px solid rgba(231, 221, 204, 0.25);
+        padding: 14px 20px !important;
     }
     .sales-modern-card .bottom-left-item,
     .sales-modern-card .bottom-right-item {
-        padding: 12px 16px;
+        padding: 18px 20px;
+        border-top: 1px solid rgba(231, 221, 204, 0.3);
+        color: #6E665A;
+        font-size: 13px;
+    }
+    .sales-modern-card .pagination>li>a,
+    .sales-modern-card .pagination>li>span {
+        border-radius: 8px !important;
+        margin: 0 4px;
+        min-width: 38px;
+        text-align: center;
     }
     @media (max-width: 991px) {
         .sales-ui-grid {
