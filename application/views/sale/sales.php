@@ -189,12 +189,14 @@
         border-top: 1px solid rgba(231, 221, 204, 0.4);
     }
     .sales-modern-card table.dataTable thead th {
-        background: #FAFAF9 !important;
-        color: #524934;
+        background: #F3F2F0 !important;
+        color: #3F3423;
         font-size: 13px;
         font-weight: 600;
-        border-bottom: 1px solid rgba(231, 221, 204, 0.3) !important;
-        padding: 14px 20px !important;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.45) !important;
+        padding: 16px 22px !important;
+        white-space: nowrap;
+        vertical-align: middle !important;
     }
     .sales-modern-card table.dataTable tbody td {
         font-size: 13px;
