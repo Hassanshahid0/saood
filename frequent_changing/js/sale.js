@@ -7,7 +7,7 @@ $(document).ready(function(){
   // If the backend is not receiving these parameters (because they're not sent), it will return all data.
   // Solution: pass the DataTables paging parameters in the AJAX data function, so they're sent with the request.
 
-  $("#datatable").DataTable({
+  let salesTable = $("#datatable").DataTable({
       autoWidth: false,
       ordering: true,
       processing: true,
@@ -34,7 +34,11 @@ $(document).ready(function(){
                   search: d.search,
                   draw: d.draw,
                   order: d.order,
-                  columns: d.columns // just in case sorting is needed on server
+                  columns: d.columns, // just in case sorting is needed on server
+                  from_date: $("#sales_from_date").val(),
+                  to_date: $("#sales_to_date").val(),
+                  order_type: $("#sales_order_type").val(),
+                  payment_method_id: $("#sales_payment_method").val()
               };
           }
       },
@@ -75,6 +79,18 @@ $(document).ready(function(){
           next: "Next",
         },
       },
+	  });
+
+  $(document).on("click", "#sales_filter_apply", function () {
+      salesTable.ajax.reload();
+  });
+
+  $(document).on("click", "#sales_filter_reset", function () {
+      $("#sales_from_date").val("");
+      $("#sales_to_date").val("");
+      $("#sales_order_type").val("");
+      $("#sales_payment_method").val("");
+      salesTable.ajax.reload();
   });
 });
 

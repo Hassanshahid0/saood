@@ -10,7 +10,139 @@
 <input type="hidden" id="change_delivery_address" value="<?php echo getPOSChecker("123","change_delivery_address"); ?>">
 <input type="hidden" id="menu_not_permit_access" value="<?php echo lang('menu_not_permit_access'); ?>">
 <input type="hidden" id="status_changed_successfully" value="<?php echo lang('status_changed_successfully'); ?>">
+<style>
+    .sales-page-modern {
+        background: #FAFAF9;
+        padding: 18px;
+        border-radius: 12px;
+    }
+    .sales-breadcrumb {
+        font-size: 13px;
+        color: #6E665A;
+        margin-bottom: 8px;
+    }
+    .sales-page-modern .top-left-header {
+        color: #524934;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .sales-modern-card {
+        background: #fff;
+        border: 1px solid rgba(231, 221, 204, 0.5);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(82, 73, 52, 0.05);
+    }
+    .sales-filter-card {
+        padding: 16px;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.5);
+    }
+    .sales-filter-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .sales-filter-label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #6E665A;
+    }
+    .sales-filter-control {
+        width: 100%;
+        height: 38px;
+        border: 1px solid rgba(231, 221, 204, 0.8);
+        border-radius: 8px;
+        padding: 0 10px;
+        font-size: 13px;
+        color: #1C1A16;
+        background: #fff;
+    }
+    .sales-filter-control:focus {
+        border-color: #524934;
+        outline: none;
+    }
+    .sales-filter-actions {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+    }
+    .btn-sales-apply {
+        flex: 1;
+        border: 1px solid #524934;
+        background: #524934;
+        color: #fff;
+        border-radius: 8px;
+        height: 38px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .btn-sales-reset {
+        border: 1px solid rgba(231, 221, 204, 0.9);
+        background: #fff;
+        color: #524934;
+        border-radius: 8px;
+        height: 38px;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0 12px;
+    }
+    .sales-modern-card .top-left-item, .sales-modern-card .top-right-item {
+        padding: 14px 16px;
+        margin: 0;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.4);
+    }
+    .sales-modern-card .top-left-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .sales-modern-card .dataTables_length label,
+    .sales-modern-card .dataTables_filter label {
+        margin-bottom: 0;
+        font-size: 13px;
+        color: #6E665A;
+        font-weight: 500;
+    }
+    .sales-modern-card .dataTables_filter input,
+    .sales-modern-card .dataTables_length select {
+        border: 1px solid rgba(231, 221, 204, 0.9);
+        border-radius: 8px;
+        min-height: 34px;
+        font-size: 13px;
+    }
+    .sales-modern-card table.dataTable thead th {
+        background: #FAFAF9 !important;
+        color: #524934;
+        font-size: 13px;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.4) !important;
+    }
+    .sales-modern-card table.dataTable tbody td {
+        font-size: 13px;
+        color: #1C1A16;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.25);
+    }
+    .sales-modern-card .bottom-left-item,
+    .sales-modern-card .bottom-right-item {
+        padding: 12px 16px;
+    }
+    @media (max-width: 991px) {
+        .sales-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 575px) {
+        .sales-filter-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 <section class="main-content-wrapper">
+    <div class="sales-page-modern">
+    <div class="sales-breadcrumb"><?php echo lang('sales'); ?></div>
 
     <?php
 if ($this->session->flashdata('exception')) {
@@ -62,7 +194,43 @@ if ($this->session->flashdata('exception_1')) {
         </div>
     </section>
 
-    <div class="box-wrapper">
+    <div class="box-wrapper sales-modern-card">
+        <div class="sales-filter-card">
+            <div class="sales-filter-grid">
+                <div>
+                    <label class="sales-filter-label" for="sales_from_date">From Date</label>
+                    <input type="date" id="sales_from_date" class="sales-filter-control">
+                </div>
+                <div>
+                    <label class="sales-filter-label" for="sales_to_date">To Date</label>
+                    <input type="date" id="sales_to_date" class="sales-filter-control">
+                </div>
+                <div>
+                    <label class="sales-filter-label" for="sales_order_type"><?php echo lang('order_type'); ?></label>
+                    <select id="sales_order_type" class="sales-filter-control">
+                        <option value="">All Types</option>
+                        <option value="1">Dine In</option>
+                        <option value="2">Take Away</option>
+                        <option value="3"><?php echo lang('delivery'); ?></option>
+                    </select>
+                </div>
+                <div>
+                    <label class="sales-filter-label" for="sales_payment_method"><?php echo lang('payment_method'); ?></label>
+                    <select id="sales_payment_method" class="sales-filter-control">
+                        <option value="">All Methods</option>
+                        <?php if(isset($payment_methods) && $payment_methods): ?>
+                            <?php foreach($payment_methods as $payment_method): ?>
+                                <option value="<?php echo escape_output($payment_method->id); ?>"><?php echo escape_output($payment_method->name); ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
+                <div class="sales-filter-actions">
+                    <button type="button" class="btn-sales-apply" id="sales_filter_apply">Apply</button>
+                    <button type="button" class="btn-sales-reset" id="sales_filter_reset"><?php echo lang('reset'); ?></button>
+                </div>
+            </div>
+        </div>
         <div class="table-box">
             <!-- /.box-header -->
             <div class="table-responsive">
@@ -89,6 +257,7 @@ if ($this->session->flashdata('exception_1')) {
             </div>
             <!-- /.box-body -->
         </div>
+    </div>
     </div>
 
 </section>
