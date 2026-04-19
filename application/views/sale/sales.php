@@ -33,6 +33,63 @@
         overflow: hidden;
         box-shadow: 0 1px 6px rgba(82, 73, 52, 0.05);
     }
+    .sales-ui-filters {
+        padding: 20px;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.45);
+    }
+    .sales-ui-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .sales-ui-label {
+        display: block;
+        margin-bottom: 6px;
+        color: #6E665A;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .sales-ui-input,
+    .sales-ui-select {
+        width: 100%;
+        min-height: 38px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(231, 221, 204, 0.75);
+        color: #1C1A16;
+        font-size: 13px;
+        background: #fff;
+    }
+    .sales-ui-input:focus,
+    .sales-ui-select:focus {
+        outline: none;
+        border-color: #524934;
+    }
+    .sales-ui-actions {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+    }
+    .sales-ui-btn-apply {
+        flex: 1;
+        min-height: 38px;
+        border-radius: 8px;
+        border: 1px solid #524934;
+        background: #524934;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .sales-ui-btn-reset {
+        min-height: 38px;
+        border-radius: 8px;
+        border: 1px solid rgba(231, 221, 204, 0.75);
+        background: #fff;
+        color: #524934;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0 12px;
+    }
     .sales-modern-card .top-left-item, .sales-modern-card .top-right-item {
         padding: 14px 16px;
         margin: 0;
@@ -58,6 +115,9 @@
         min-height: 34px;
         font-size: 13px;
     }
+    .sales-modern-card .dt-buttons .dt-button {
+        border-radius: 8px !important;
+    }
     .sales-modern-card table.dataTable thead th {
         background: #FAFAF9 !important;
         color: #524934;
@@ -73,6 +133,16 @@
     .sales-modern-card .bottom-left-item,
     .sales-modern-card .bottom-right-item {
         padding: 12px 16px;
+    }
+    @media (max-width: 991px) {
+        .sales-ui-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 575px) {
+        .sales-ui-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 <section class="main-content-wrapper">
@@ -130,6 +200,40 @@ if ($this->session->flashdata('exception_1')) {
     </section>
 
     <div class="box-wrapper sales-modern-card">
+        <div class="sales-ui-filters">
+            <div class="sales-ui-grid">
+                <div>
+                    <label class="sales-ui-label">From Date</label>
+                    <input type="date" class="sales-ui-input">
+                </div>
+                <div>
+                    <label class="sales-ui-label">To Date</label>
+                    <input type="date" class="sales-ui-input">
+                </div>
+                <div>
+                    <label class="sales-ui-label"><?php echo lang('order_type'); ?></label>
+                    <select class="sales-ui-select">
+                        <option>All Types</option>
+                        <option>Dine In</option>
+                        <option>Takeaway</option>
+                        <option>Delivery</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="sales-ui-label"><?php echo lang('payment_method'); ?></label>
+                    <select class="sales-ui-select">
+                        <option>All Methods</option>
+                        <option>Cash</option>
+                        <option>Card</option>
+                        <option>UPI</option>
+                    </select>
+                </div>
+                <div class="sales-ui-actions">
+                    <button type="button" class="sales-ui-btn-apply">Apply</button>
+                    <button type="button" class="sales-ui-btn-reset">Reset</button>
+                </div>
+            </div>
+        </div>
         <div class="table-box">
             <!-- /.box-header -->
             <div class="table-responsive">
