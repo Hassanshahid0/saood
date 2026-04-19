@@ -126,6 +126,25 @@
         padding: 0 12px;
         background: #fff;
     }
+    .sales-modern-card #datatable_filter label {
+        position: relative;
+    }
+    .sales-modern-card #datatable_filter label svg {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6E665A;
+    }
+    .sales-modern-card #datatable_filter input {
+        min-width: 320px;
+        padding-left: 36px;
+        transition: all 0.2s ease;
+    }
+    .sales-modern-card #datatable_filter input:focus {
+        border-color: #524934;
+        box-shadow: 0 0 0 3px rgba(82, 73, 52, 0.12);
+    }
     .sales-modern-card .dt-buttons .dt-button,
     .sales-modern-card .btn_list,
     .sales-modern-card .toggleBtn {
@@ -182,6 +201,28 @@
         color: #1C1A16;
         border-bottom: 1px solid rgba(231, 221, 204, 0.25);
         padding: 14px 20px !important;
+        vertical-align: middle;
+    }
+    .sales-modern-card table.dataTable tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+    .sales-modern-card table.dataTable tbody tr:nth-child(even) {
+        background: #FDFCF9;
+    }
+    .sales-modern-card table.dataTable tbody tr:hover {
+        background: #FAF8F2 !important;
+    }
+    .sales-modern-card table.dataTable tbody td:nth-child(2) {
+        color: #524934;
+        font-weight: 600;
+    }
+    .sales-modern-card table.dataTable tbody td:nth-child(6) {
+        color: #16A34A;
+        font-weight: 600;
+    }
+    .sales-modern-card table.dataTable tbody td:nth-child(7) {
+        color: #DC2626;
+        font-weight: 600;
     }
     .sales-modern-card .bottom-left-item,
     .sales-modern-card .bottom-right-item {
@@ -205,6 +246,9 @@
     @media (max-width: 575px) {
         .sales-ui-grid {
             grid-template-columns: 1fr;
+        }
+        .sales-modern-card #datatable_filter input {
+            min-width: 180px;
         }
     }
 </style>
