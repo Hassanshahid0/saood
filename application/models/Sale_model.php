@@ -1846,25 +1846,6 @@ class Sale_model extends CI_Model {
     }
 
     /* -----------------------------
-       OPTIONAL FILTERS
-    ------------------------------ */
-    if (!empty($_POST['from_date'])) {
-        $this->db->where('tbl_sales.sale_date >=', $_POST['from_date']);
-    }
-
-    if (!empty($_POST['to_date'])) {
-        $this->db->where('tbl_sales.sale_date <=', $_POST['to_date']);
-    }
-
-    if (!empty($_POST['order_type'])) {
-        $this->db->where('tbl_sales.order_type', $_POST['order_type']);
-    }
-
-    if (!empty($_POST['payment_method_id'])) {
-        $this->db->where('tbl_sales.payment_method_id', $_POST['payment_method_id']);
-    }
-
-    /* -----------------------------
        FIXED FILTERS
     ------------------------------ */
     $this->db->where('tbl_sales.outlet_id', $outlet_id);

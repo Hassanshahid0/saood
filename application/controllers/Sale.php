@@ -90,7 +90,6 @@ class Sale extends Cl_Controller {
         $outlet_id = $this->session->userdata('outlet_id');
         $data = array();
         $data['edit_return_id'] = $id;
-        $data['payment_methods'] = $this->Sale_model->getAllPaymentMethods();
         $data['main_content'] = $this->load->view('sale/sales', $data, TRUE);
         $this->load->view('userHome', $data);
     }
