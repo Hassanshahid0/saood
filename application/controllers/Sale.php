@@ -4106,15 +4106,18 @@ We hope to see you again!";
                     ROW DATA
                     -------------------------- */
                     $sub_array = [];
+                    $total_refund_value = (float)($value->total_refund ?? 0);
+                    $refund_class = $total_refund_value > 0 ? 'sales-refund-amount is-refund' : 'sales-refund-amount';
+
                     $sub_array[] = escape_output($i--);
-                    $sub_array[] = escape_output($value->sale_no);
-                    $sub_array[] = escape_output($order_type);
-                    $sub_array[] = escape_output(date($this->session->userdata('date_format'), strtotime($value->sale_date))).' '.escape_output($value->order_time);
-                    $sub_array[] = escape_output($value->customer_name).($value->customer_phone ? ' ('.$value->customer_phone.')' : '');
-                    $sub_array[] = escape_output(getAmtPCustom($value->total_payable));
-                    $sub_array[] = $value->total_refund ? escape_output(getAmtPCustom($value->total_refund)) : '';
-                    $sub_array[] = $payment_details;
-                    $sub_array[] = escape_output($value->full_name);
+                    $sub_array[] = '<span class="sales-sale-no">'.escape_output($value->sale_no).'</span>';
+                    $sub_array[] = '<span class="sales-order-type-chip">'.escape_output($order_type).'</span>';
+                    $sub_array[] = '<span class="sales-date-time">'.escape_output(date($this->session->userdata('date_format'), strtotime($value->sale_date))).' '.escape_output($value->order_time).'</span>';
+                    $sub_array[] = '<span class="sales-customer">'.escape_output($value->customer_name).($value->customer_phone ? ' ('.escape_output($value->customer_phone).')' : '').'</span>';
+                    $sub_array[] = '<span class="sales-payable-amount">'.escape_output(getAmtPCustom($value->total_payable)).'</span>';
+                    $sub_array[] = '<span class="'.escape_output($refund_class).'">'.escape_output($value->total_refund ? getAmtPCustom($value->total_refund) : getAmtPCustom(0)).'</span>';
+                    $sub_array[] = '<span class="sales-payment-method">'.escape_output($payment_details).'</span>';
+                    $sub_array[] = '<span class="sales-added-by">'.escape_output($value->full_name).'</span>';
                     $sub_array[] = '<div class="btn_group_wrap">'.$html.'</div>';
 
                     $data[] = $sub_array;

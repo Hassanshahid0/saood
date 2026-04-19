@@ -214,17 +214,34 @@
     .sales-modern-card table.dataTable tbody tr:hover {
         background: #FAF8F2 !important;
     }
-    .sales-modern-card table.dataTable tbody td:nth-child(2) {
+    .sales-modern-card .sales-sale-no {
         color: #524934;
-        font-weight: 600;
+        font-weight: 500;
     }
-    .sales-modern-card table.dataTable tbody td:nth-child(6) {
+    .sales-modern-card .sales-order-type-chip {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: rgba(82, 73, 52, 0.1);
+        color: #524934;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    .sales-modern-card .sales-payable-amount {
         color: #16A34A;
         font-weight: 600;
     }
-    .sales-modern-card table.dataTable tbody td:nth-child(7) {
-        color: #DC2626;
+    .sales-modern-card .sales-refund-amount {
+        color: #6E665A;
         font-weight: 600;
+    }
+    .sales-modern-card .sales-refund-amount.is-refund {
+        color: #DC2626;
+    }
+    .sales-modern-card .sales-added-by {
+        color: #6E665A;
     }
     .sales-modern-card .bottom-left-item,
     .sales-modern-card .bottom-right-item {
