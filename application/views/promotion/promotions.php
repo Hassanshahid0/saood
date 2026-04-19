@@ -3,6 +3,13 @@
         background: #F8F7F4;
         min-height: 100vh;
         padding: 24px;
+        font-family: 'Inter', sans-serif;
+    }
+    .promotions-breadcrumb {
+        font-size: 13px;
+        color: #8C8475;
+        margin-bottom: 4px;
+        font-weight: 400;
     }
     .promotions-page-modern .top-left-header {
         color: #1C1A16;
@@ -17,6 +24,24 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(82, 73, 52, 0.04);
+    }
+    .promotions-table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.3);
+        background: #fff;
+    }
+    .promotions-table-header .left-tools,
+    .promotions-table-header .right-tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .promotions-table-header .left-tools {
+        color: #6E665A;
+        font-size: 13px;
     }
     .promotions-modern-card .table-responsive {
         margin: 0;
@@ -34,6 +59,14 @@
         border-top: 1px solid #E7E1CC !important;
         border-bottom: 1px solid #E7E1CC !important;
         padding: 14px 16px !important;
+    }
+    .promotions-modern-card table.dataTable thead .sorting:before,
+    .promotions-modern-card table.dataTable thead .sorting:after,
+    .promotions-modern-card table.dataTable thead .sorting_asc:before,
+    .promotions-modern-card table.dataTable thead .sorting_asc:after,
+    .promotions-modern-card table.dataTable thead .sorting_desc:before,
+    .promotions-modern-card table.dataTable thead .sorting_desc:after {
+        display: none !important;
     }
     .promotions-modern-card table.dataTable tbody td {
         padding: 14px 16px !important;
@@ -93,6 +126,9 @@
         color: #6E665A;
         transition: .2s ease;
     }
+    .promo-action-btn:hover {
+        text-decoration: none;
+    }
     .promo-action-btn.edit:hover {
         background: #FEF3C7;
         color: #92400E;
@@ -100,6 +136,41 @@
     .promo-action-btn.delete:hover {
         background: #FEE2E2;
         color: #B91C1C;
+    }
+    .promotions-modern-card .dataTables_wrapper .top,
+    .promotions-modern-card .dataTables_wrapper .bottom {
+        padding: 20px 24px;
+    }
+    .promotions-modern-card .dataTables_filter input,
+    .promotions-modern-card .dataTables_length select {
+        border: 1px solid rgba(231, 221, 204, 0.5);
+        border-radius: 8px;
+        min-height: 36px;
+        color: #1C1A16;
+    }
+    .promotions-modern-card .dataTables_filter input:focus,
+    .promotions-modern-card .dataTables_length select:focus {
+        outline: none;
+        border-color: #5C523A;
+        box-shadow: 0 0 0 3px rgba(92, 82, 58, 0.08);
+    }
+    .promotions-modern-card .pagination .page-link {
+        border-radius: 8px !important;
+        border: 1px solid rgba(231, 221, 204, 0.5) !important;
+        color: #524934 !important;
+    }
+    .promotions-modern-card .pagination .page-item.active .page-link {
+        background: #524934 !important;
+        border-color: #524934 !important;
+        color: #fff !important;
+    }
+    @media (max-width: 768px) {
+        .promotions-page-modern {
+            padding: 16px;
+        }
+        .promotions-table-header {
+            padding: 14px 16px;
+        }
     }
 </style>
 
@@ -131,6 +202,7 @@
             <section class="content-header">
                 <div class="row">
                     <div class="col-sm-12 col-md-8">
+                        <div class="promotions-breadcrumb"><?php echo lang('promotions'); ?></div>
                         <h2 class="top-left-header"><?php echo lang('promotions'); ?> </h2>
                         <input type="hidden" class="datatable_name" data-title="<?php echo lang('promotions'); ?>" data-id_name="datatable">
                     </div>
@@ -141,6 +213,10 @@
             </section>
 
             <div class="box-wrapper promotions-modern-card">
+                <div class="promotions-table-header">
+                    <div class="left-tools"><?php echo lang('promotions'); ?> <?php echo lang('list'); ?></div>
+                    <div class="right-tools"></div>
+                </div>
                 <div class="table-box">
                     <!-- /.box-header -->
                     <div class="table-responsive">
