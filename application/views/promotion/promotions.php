@@ -1,4 +1,110 @@
+<style>
+    .promotions-page-modern {
+        background: #F8F7F4;
+        min-height: 100vh;
+        padding: 24px;
+    }
+    .promotions-page-modern .top-left-header {
+        color: #1C1A16;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        margin-top: 0;
+    }
+    .promotions-modern-card {
+        background: #fff;
+        border: 1px solid #E7E1CC;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(82, 73, 52, 0.04);
+    }
+    .promotions-modern-card .table-responsive {
+        margin: 0;
+    }
+    .promotions-modern-card table {
+        margin: 0 !important;
+    }
+    .promotions-modern-card table.dataTable thead th {
+        background: #F8F7F4 !important;
+        color: #6E665A;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+        border-top: 1px solid #E7E1CC !important;
+        border-bottom: 1px solid #E7E1CC !important;
+        padding: 14px 16px !important;
+    }
+    .promotions-modern-card table.dataTable tbody td {
+        padding: 14px 16px !important;
+        color: #1C1A16;
+        border-bottom: 1px solid #F0EDE4 !important;
+        vertical-align: middle;
+    }
+    .promotions-modern-card table.dataTable tbody tr:hover {
+        background: #FDFCFB !important;
+    }
+    .promo-status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .promo-status-pill.active {
+        color: #166534;
+        background: #DCFCE7;
+    }
+    .promo-status-pill.inactive {
+        color: #9A3412;
+        background: #FFEDD5;
+    }
+    .promotion-type-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #F0EDE4;
+        color: #6E665A;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .promotion-food-wrap {
+        line-height: 1.45;
+    }
+    .promotion-food-wrap b {
+        color: #5C523A;
+        font-weight: 700;
+    }
+    .promo-action-group {
+        display: inline-flex;
+        gap: 8px;
+    }
+    .promo-action-btn {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 1px solid #E7E1CC;
+        background: #fff;
+        color: #6E665A;
+        transition: .2s ease;
+    }
+    .promo-action-btn.edit:hover {
+        background: #FEF3C7;
+        color: #92400E;
+    }
+    .promo-action-btn.delete:hover {
+        background: #FEE2E2;
+        color: #B91C1C;
+    }
+</style>
+
  <section class="main-content-wrapper">
+    <div class="promotions-page-modern">
         <?php
         if ($this->session->flashdata('exception')) {
 
@@ -34,7 +140,7 @@
                 </div>
             </section>
 
-            <div class="box-wrapper">
+            <div class="box-wrapper promotions-modern-card">
                 <div class="table-box">
                     <!-- /.box-header -->
                     <div class="table-responsive">
@@ -63,10 +169,12 @@
                                 <tr>
                                     <td class="ir_txt_center"><?php echo escape_output($i--); ?></td>
                                     <td><?php echo escape_output($wsts->title) ?></td>
-                                    <td><?php echo escape_output($wsts->type==1?'Discount':'Free Item') ?></td>
+                                    <td>
+                                        <span class="promotion-type-pill"><?php echo escape_output($wsts->type==1?'Discount':'Free Item') ?></span>
+                                    </td>
                                     <td><?php echo escape_output(date($this->session->userdata('date_format'), strtotime($wsts->start_date))); ?></td>
                                     <td><?php echo escape_output(date($this->session->userdata('date_format'), strtotime($wsts->end_date))); ?></td>
-                                    <td>
+                                    <td class="promotion-food-wrap">
                                                 <?php if($wsts->type==1):
                                                     echo getFoodMenuNameById($wsts->food_menu_id)."(".getFoodMenuCodeById($wsts->food_menu_id).")";
                                                 else:
@@ -79,16 +187,20 @@
                                         <?php else:?>
                                         <td>-</td>
                                         <?php endif;?>
-                                    <td><?php echo escape_output($wsts->status==1?lang('Active'):lang('Inactive')) ?></td>
+                                    <td>
+                                        <span class="promo-status-pill <?php echo escape_output($wsts->status==1?'active':'inactive'); ?>">
+                                            <?php echo escape_output($wsts->status==1?lang('Active'):lang('Inactive')) ?>
+                                        </span>
+                                    </td>
                                     <td><?php echo escape_output(userName($wsts->user_id)); ?></td>
 
                                     <td>
-                                        <div class="btn_group_wrap">
-                                            <a class="btn btn-warning" href="<?php echo base_url() ?>Promotion/addEditPromotion/<?php echo escape_output($this->custom->encrypt_decrypt($wsts->id, 'encrypt')); ?>" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        <div class="btn_group_wrap promo-action-group">
+                                            <a class="promo-action-btn edit" href="<?php echo base_url() ?>Promotion/addEditPromotion/<?php echo escape_output($this->custom->encrypt_decrypt($wsts->id, 'encrypt')); ?>" data-bs-toggle="tooltip" data-bs-placement="top"
                                             data-bs-original-title="<?php echo lang('edit'); ?>">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <a class="delete btn btn-danger" href="<?php echo base_url() ?>Promotion/deletePromotion/<?php echo escape_output($this->custom->encrypt_decrypt($wsts->id, 'encrypt')); ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="<?php echo lang('delete'); ?>">
+                                            <a class="delete promo-action-btn delete" href="<?php echo base_url() ?>Promotion/deletePromotion/<?php echo escape_output($this->custom->encrypt_decrypt($wsts->id, 'encrypt')); ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="<?php echo lang('delete'); ?>">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </a>
                                         </div>
@@ -104,6 +216,7 @@
                     <!-- /.box-body -->
                 </div>
             </div>
+    </div>
  </section>
  <!-- DataTables -->
 
