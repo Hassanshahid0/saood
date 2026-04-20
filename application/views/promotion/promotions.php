@@ -34,6 +34,24 @@
         border-top: 1px solid #E7E1CC !important;
         border-bottom: 1px solid #E7E1CC !important;
         padding: 14px 16px !important;
+        position: relative;
+    }
+    /* HIDE DATATABLES SORTING ARROWS */
+    .promotions-modern-card table.dataTable thead .sorting:before,
+    .promotions-modern-card table.dataTable thead .sorting:after,
+    .promotions-modern-card table.dataTable thead .sorting_asc:before,
+    .promotions-modern-card table.dataTable thead .sorting_asc:after,
+    .promotions-modern-card table.dataTable thead .sorting_desc:before,
+    .promotions-modern-card table.dataTable thead .sorting_desc:after,
+    .promotions-modern-card table.dataTable thead .sorting_asc_disabled:before,
+    .promotions-modern-card table.dataTable thead .sorting_asc_disabled:after,
+    .promotions-modern-card table.dataTable thead .sorting_desc_disabled:before,
+    .promotions-modern-card table.dataTable thead .sorting_desc_disabled:after {
+        display: none !important;
+        content: "" !important;
+    }
+    .promotions-modern-card table.dataTable thead th {
+        background-image: none !important;
     }
     .promotions-modern-card table.dataTable tbody td {
         padding: 14px 16px !important;
@@ -100,6 +118,86 @@
     .promo-action-btn.delete:hover {
         background: #FEE2E2;
         color: #B91C1C;
+    }
+
+    /* MODERN FOOTER STYLING */
+    .custom-footer-flex {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 24px 38px !important;
+        border-top: 1px solid rgba(231, 221, 204, 0.3) !important;
+        background: #fff;
+    }
+    .promotions-modern-card .bottom-left-item {
+        flex: none !important;
+    }
+    .promotions-modern-card .bottom-right-item {
+        flex: none !important;
+    }
+    .promotions-modern-card .dataTables_info {
+        padding: 9px 38px !important;
+        color: #6E665A !important;
+        font-size: 13.5px !important;
+        font-weight: 400 !important;
+    }
+    .promotions-modern-card .dataTables_paginate {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .promotions-modern-card .pagination {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        margin: 0 !important;
+        padding: 9px 0 !important;
+        list-style: none !important;
+    }
+    .promotions-modern-card .pagination .page-item {
+        margin: 0 !important;
+    }
+    .promotions-modern-card .pagination .page-link {
+        padding: 8px 16px !important;
+        background: #FFFFFF !important;
+        border: 1px solid rgba(231, 221, 204, 0.5) !important;
+        border-radius: 8px !important;
+        color: #524934 !important;
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s !important;
+        box-shadow: none !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+    }
+    .promotions-modern-card .pagination .page-item.active .page-link {
+        background: #524934 !important;
+        border-color: #524934 !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+    }
+    .promotions-modern-card .pagination .page-item:hover:not(.active):not(.disabled) .page-link {
+        background: #FAFAF9 !important;
+        border-color: rgba(231, 221, 204, 0.8) !important;
+    }
+    .promotions-modern-card .pagination .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: #fff !important;
+    }
+    .promotions-modern-card .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0 !important;
+        border: none !important;
+    }
+    .promotions-modern-card .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: transparent !important;
+    }
+    /* Specific styling for page numbers */
+    .promotions-modern-card .pagination .page-item:not(.previous):not(.next) .page-link {
+        min-width: 38px;
+        text-align: center;
+        justify-content: center;
+        display: flex;
     }
 </style>
 
@@ -221,3 +319,36 @@
  <!-- DataTables -->
 
  <?php $this->view('common/footer_js')?>
+
+<script>
+    $(document).ready(function() {
+        // Initialize DataTables with the custom flex footer
+        if ($.fn.DataTable.isDataTable('#datatable')) {
+            $('#datatable').DataTable().destroy();
+        }
+        
+        $('#datatable').DataTable({
+            'autoWidth': false,
+            'ordering': true,
+            'order': [[0, "desc"]],
+            'dom': '<"top-left-item"lf><"top-right-item"B>rt<"custom-footer-flex" <"bottom-left-item"i><"bottom-right-item"p>>',
+            'buttons': [
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa-solid fa-download"></i> Export',
+                    titleAttr: 'Export',
+                    className: 'btn_list'
+                }
+            ],
+            'language': {
+                'paginate': {
+                    'previous': 'Previous',
+                    'next': 'Next'
+                },
+                'lengthMenu': 'Show _MENU_ entries',
+                'search': '',
+                'searchPlaceholder': 'Search...'
+            }
+        });
+    });
+</script>

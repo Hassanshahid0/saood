@@ -34,39 +34,24 @@ $(document).ready(function(){
                   search: d.search,
                   draw: d.draw,
                   order: d.order,
-                  columns: d.columns // just in case sorting is needed on server
+                  columns: d.columns,
+                  startDate: $('#startDate').val(),
+                  endDate: $('#endDate').val(),
+                  order_type: $('#order_type_filter').val(),
+                  payment_method_id: $('#payment_method_filter').val()
               };
           }
       },
       columnDefs: [
           { orderable: true, targets: [ 5, 7, 8 ] }
       ],
-      dom: '<"top-left-item col-sm-12 col-md-6"lf> <"top-right-item col-sm-12 col-md-6"B> t <"bottom-left-item col-sm-12 col-md-6 "i><"bottom-right-item col-sm-12 col-md-6 "p>',
+      dom: '<"top-left-item"lf><"top-right-item"B>rt<"custom-footer-flex" <"bottom-left-item"i><"bottom-right-item"p>>',
       buttons:[
         {
-          extend:    'print',
-          text:      '<i class="fa-solid fa-print"></i> Print',
-          titleAttr: 'print'
-        },
-        {
-            extend:    'copyHtml5',
-            text:      '<i class="fa-solid fa-copy"></i> Copy',
-            titleAttr: 'Copy'
-        },
-        {
-            extend:    'excelHtml5',
-            text:      '<i class="fa-solid fa-file-excel"></i> Excel',
-            titleAttr: 'Excel'
-        },
-        {
-            extend:    'csvHtml5',
-            text:      '<i class="fa-solid fa-file-csv"></i> CSV',
-            titleAttr: 'CSV'
-        },
-        {
-            extend:    'pdfHtml5',
-            text:      '<i class="fa-solid fa-file-pdf"></i> PDF',
-            titleAttr: 'PDF'
+          extend:    'excelHtml5',
+          text:      '<i class="fa-solid fa-download"></i> Export',
+          titleAttr: 'Export',
+          className: 'btn_list'
         }
     ],
       language: {
@@ -74,7 +59,29 @@ $(document).ready(function(){
           previous: "Previous",
           next: "Next",
         },
+        lengthMenu: "Show _MENU_ entries",
+        search: "",
+        searchPlaceholder: "Search..."
       },
+      initComplete: function() {
+        // Move the tools into our custom header
+        $('.top-left-item').appendTo('.left-tools');
+        $('.top-right-item').appendTo('.right-tools');
+      }
+  });
+
+  // Apply Filter
+  $(document).on('click', '#apply_filter', function() {
+      datatable.ajax.reload();
+  });
+
+  // Reset Filter
+  $(document).on('click', '#reset_filter', function() {
+      $('#startDate').val('');
+      $('#endDate').val('');
+      $('#order_type_filter').val('');
+      $('#payment_method_filter').val('');
+      datatable.ajax.reload();
   });
 });
 
