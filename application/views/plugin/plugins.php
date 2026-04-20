@@ -22,6 +22,7 @@
     ?>
     <section class="content-header">
                 <h3 class="top-left-header"><?php echo lang('plugins'); ?> </h3>
+                <input type="hidden" class="datatable_name" data-title="<?php echo lang('plugins'); ?>" data-id_name="datatable">
     </section>
 
     <div class="box-wrapper">

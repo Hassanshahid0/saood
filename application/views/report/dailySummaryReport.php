@@ -67,6 +67,7 @@
                     </h4>
 
                     <h4 class="ir_fw_ta_mt20 txt-color-grey"><?php echo lang('purchases'); ?></h4>
+                    <input type="hidden" class="datatable_name" data-title="<?php echo lang('daily_summary_report'); ?>" data-id_name="datatable">
 
                     <table id="datatable" class="table">
                         <thead>

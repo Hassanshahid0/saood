@@ -81,6 +81,7 @@
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <h3><?php echo lang('Monthly_Purchase_Report'); ?></h3>
+                    <input type="hidden" class="datatable_name" data-title="<?php echo lang('Monthly_Purchase_Report'); ?>" data-id_name="datatable">
                     <?php
                     if(isLMni() && isset($outlet_id)):
                         ?>
