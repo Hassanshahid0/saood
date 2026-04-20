@@ -52,7 +52,7 @@
                                     <th class="ir_w_10"><?php echo lang('is_loyalty_enable'); ?></th>
                                 <?php endif;?>
                                 <th class="ir_w_10"><?php echo lang('added_by'); ?></th>
-                                <th class="ir_w_1_txt_center"><?php echo lang('actions'); ?></th>
+                                <th class="ir_w_1_txt_center not-export-col"><?php echo lang('actions'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
