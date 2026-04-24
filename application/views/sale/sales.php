@@ -10,7 +10,277 @@
 <input type="hidden" id="change_delivery_address" value="<?php echo getPOSChecker("123","change_delivery_address"); ?>">
 <input type="hidden" id="menu_not_permit_access" value="<?php echo lang('menu_not_permit_access'); ?>">
 <input type="hidden" id="status_changed_successfully" value="<?php echo lang('status_changed_successfully'); ?>">
+<style>
+    .sales-page-modern {
+        background: #FAFAF9;
+        padding: 18px;
+        border-radius: 12px;
+    }
+    .sales-breadcrumb {
+        font-size: 13px;
+        color: #6E665A;
+        margin-bottom: 8px;
+    }
+    .sales-page-modern .top-left-header {
+        color: #524934;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .sales-modern-card {
+        background: #fff;
+        border: 1px solid rgba(231, 221, 204, 0.5);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(82, 73, 52, 0.05);
+    }
+    .sales-ui-filters {
+        padding: 20px;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.45);
+    }
+    .sales-ui-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .sales-ui-label {
+        display: block;
+        margin-bottom: 6px;
+        color: #6E665A;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .sales-ui-input,
+    .sales-ui-select {
+        width: 100%;
+        min-height: 38px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(231, 221, 204, 0.75);
+        color: #1C1A16;
+        font-size: 13px;
+        background: #fff;
+    }
+    .sales-ui-input:focus,
+    .sales-ui-select:focus {
+        outline: none;
+        border-color: #524934;
+    }
+    .sales-ui-actions {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+    }
+    .sales-ui-btn-apply {
+        flex: 1;
+        min-height: 38px;
+        border-radius: 8px;
+        border: 1px solid #524934;
+        background: #524934;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .sales-ui-btn-reset {
+        min-height: 38px;
+        border-radius: 8px;
+        border: 1px solid rgba(231, 221, 204, 0.75);
+        background: #fff;
+        color: #524934;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0 12px;
+    }
+    .sales-modern-card .top-left-item, .sales-modern-card .top-right-item {
+        padding: 18px 24px;
+        margin: 0;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.4);
+        background: #fff;
+    }
+    .sales-modern-card .top-left-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .sales-modern-card .top-right-item {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .sales-modern-card .dataTables_length label,
+    .sales-modern-card .dataTables_filter label {
+        margin-bottom: 0;
+        font-size: 13px;
+        color: #6E665A;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .sales-modern-card .dataTables_filter input,
+    .sales-modern-card .dataTables_length select {
+        border: 1px solid rgba(231, 221, 204, 0.9);
+        border-radius: 8px;
+        min-height: 42px;
+        font-size: 13px;
+        padding: 0 12px;
+        background: #fff;
+    }
+    .sales-modern-card #datatable_filter label {
+        position: relative;
+    }
+    .sales-modern-card #datatable_filter label svg {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6E665A;
+    }
+    .sales-modern-card #datatable_filter input {
+        min-width: 320px;
+        padding-left: 36px;
+        transition: all 0.2s ease;
+    }
+    .sales-modern-card #datatable_filter input:focus {
+        border-color: #524934;
+        box-shadow: 0 0 0 3px rgba(82, 73, 52, 0.12);
+    }
+    .sales-modern-card .dt-buttons .dt-button,
+    .sales-modern-card .btn_list,
+    .sales-modern-card .toggleBtn {
+        border-radius: 8px !important;
+        min-height: 42px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+    .sales-modern-card .btn_list[data-access="exportDailySales-123"] {
+        background: #5C523A !important;
+        border-color: #5C523A !important;
+        color: #fff !important;
+    }
+    .sales-modern-card .btn_list[data-access="resetDailySales-123"] {
+        background: #fff !important;
+        border: 1px solid rgba(231, 221, 204, 0.9) !important;
+        color: #524934 !important;
+    }
+    .sales-modern-card .toggleBtn {
+        background: #fff !important;
+        border: 1px solid rgba(231, 221, 204, 0.9) !important;
+        color: #524934 !important;
+    }
+    .sales-modern-card .toggleBtn svg {
+        width: 14px;
+        height: 14px;
+    }
+    .sales-modern-card .left-btn-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .sales-modern-card .right-btn-box {
+        margin-left: 0 !important;
+    }
+    .sales-modern-card .table-box .table-responsive {
+        border-top: 1px solid rgba(231, 221, 204, 0.4);
+    }
+    .sales-modern-card table.dataTable thead th {
+        background: #F3F2F0 !important;
+        color: #3F3423;
+        font-size: 13px;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.45) !important;
+        padding: 16px 22px !important;
+        white-space: nowrap;
+        vertical-align: middle !important;
+    }
+    .sales-modern-card table.dataTable tbody td {
+        font-size: 13px;
+        color: #1C1A16;
+        border-bottom: 1px solid rgba(231, 221, 204, 0.25);
+        padding: 14px 20px !important;
+        vertical-align: middle;
+    }
+    .sales-modern-card table.dataTable tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+    .sales-modern-card table.dataTable tbody tr:nth-child(even) {
+        background: #FDFCF9;
+    }
+    .sales-modern-card table.dataTable tbody tr:hover {
+        background: #FAF8F2 !important;
+    }
+    .sales-modern-card .sales-sale-no {
+        color: #524934;
+        font-weight: 500;
+    }
+    .sales-modern-card .sales-order-type-chip {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: rgba(82, 73, 52, 0.1);
+        color: #524934;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    .sales-modern-card .sales-payable-amount {
+        color: #16A34A;
+        font-weight: 600;
+    }
+    .sales-modern-card .sales-refund-amount {
+        color: #6E665A;
+        font-weight: 600;
+    }
+    .sales-modern-card .sales-refund-amount.is-refund {
+        color: #DC2626;
+    }
+    .sales-modern-card .sales-added-by {
+        color: #6E665A;
+    }
+    .sales-modern-card .bottom-left-item,
+    .sales-modern-card .bottom-right-item {
+        padding: 18px 20px;
+        border-top: 1px solid rgba(231, 221, 204, 0.3);
+        color: #6E665A;
+        font-size: 13px;
+    }
+    .sales-modern-card .pagination>li>a,
+    .sales-modern-card .pagination>li>span {
+        border-radius: 8px !important;
+        margin: 0 4px;
+        min-width: 38px;
+        text-align: center;
+    }
+    .sales-modern-card .dataTables_paginate .paginate_button.previous a:before,
+    .sales-modern-card .dataTables_paginate .paginate_button.previous a:after,
+    .sales-modern-card .dataTables_paginate .paginate_button.next a:before,
+    .sales-modern-card .dataTables_paginate .paginate_button.next a:after {
+        display: none !important;
+        content: none !important;
+    }
+    @media (max-width: 991px) {
+        .sales-ui-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 575px) {
+        .sales-ui-grid {
+            grid-template-columns: 1fr;
+        }
+        .sales-modern-card #datatable_filter input {
+            min-width: 180px;
+        }
+    }
+</style>
 <section class="main-content-wrapper">
+    <div class="sales-page-modern">
+    <div class="sales-breadcrumb"><?php echo lang('sales'); ?></div>
 
     <?php
 if ($this->session->flashdata('exception')) {
@@ -62,7 +332,41 @@ if ($this->session->flashdata('exception_1')) {
         </div>
     </section>
 
-    <div class="box-wrapper">
+    <div class="box-wrapper sales-modern-card">
+        <div class="sales-ui-filters">
+            <div class="sales-ui-grid">
+                <div>
+                    <label class="sales-ui-label">From Date</label>
+                    <input type="date" class="sales-ui-input">
+                </div>
+                <div>
+                    <label class="sales-ui-label">To Date</label>
+                    <input type="date" class="sales-ui-input">
+                </div>
+                <div>
+                    <label class="sales-ui-label"><?php echo lang('order_type'); ?></label>
+                    <select class="sales-ui-select">
+                        <option>All Types</option>
+                        <option>Dine In</option>
+                        <option>Takeaway</option>
+                        <option>Delivery</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="sales-ui-label"><?php echo lang('payment_method'); ?></label>
+                    <select class="sales-ui-select">
+                        <option>All Methods</option>
+                        <option>Cash</option>
+                        <option>Card</option>
+                        <option>UPI</option>
+                    </select>
+                </div>
+                <div class="sales-ui-actions">
+                    <button type="button" class="sales-ui-btn-apply">Apply</button>
+                    <button type="button" class="sales-ui-btn-reset">Reset</button>
+                </div>
+            </div>
+        </div>
         <div class="table-box">
             <!-- /.box-header -->
             <div class="table-responsive">
@@ -89,6 +393,7 @@ if ($this->session->flashdata('exception_1')) {
             </div>
             <!-- /.box-body -->
         </div>
+    </div>
     </div>
 
 </section>

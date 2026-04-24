@@ -1968,4 +1968,3 @@ class Sale_model extends CI_Model {
       }
 
 }
-
