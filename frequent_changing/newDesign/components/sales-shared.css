@@ -1,0 +1,113 @@
+/*
+ * Shared Sales UI Tokens + Utilities
+ * Reuse on any page by wrapping markup with `.sales-shared-theme`
+ * and applying the utility classes below.
+ */
+
+.sales-shared-theme {
+    --sales-bg-soft: #F8F7F4;
+    --sales-bg-card: #FFFFFF;
+    --sales-border: #E7E1CC;
+    --sales-border-soft: rgba(231, 221, 204, 0.5);
+    --sales-text-main: #1C1A16;
+    --sales-text-muted: #6E665A;
+    --sales-text-faded: #8C8475;
+    --sales-accent: #5C523A;
+    --sales-accent-hover: #4A422F;
+    --sales-danger: #DC2626;
+    --sales-success: #16A34A;
+    --sales-radius-sm: 8px;
+    --sales-radius-md: 10px;
+    --sales-shadow-card: 0 4px 20px rgba(82, 73, 52, 0.04);
+}
+
+.sales-shared-theme .sales-card-ui {
+    background: var(--sales-bg-card);
+    border: 1px solid var(--sales-border);
+    border-radius: 16px;
+    box-shadow: var(--sales-shadow-card);
+}
+
+.sales-shared-theme .btn-ui-primary,
+.sales-shared-theme .btn-ui-secondary {
+    min-height: 38px;
+    border-radius: var(--sales-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.sales-shared-theme .btn-ui-primary {
+    border: 1px solid var(--sales-accent);
+    background: var(--sales-accent);
+    color: #fff;
+}
+
+.sales-shared-theme .btn-ui-primary:hover {
+    background: var(--sales-accent-hover);
+    border-color: var(--sales-accent-hover);
+    color: #fff;
+}
+
+.sales-shared-theme .btn-ui-secondary {
+    border: 1px solid var(--sales-border-soft);
+    background: #fff;
+    color: var(--sales-accent);
+}
+
+.sales-shared-theme .btn-ui-secondary:hover {
+    background: #FAFAF9;
+}
+
+.sales-shared-theme .table-ui-modern {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.sales-shared-theme .table-ui-modern thead th {
+    background: var(--sales-bg-soft);
+    color: var(--sales-text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--sales-border);
+    border-bottom: 1px solid var(--sales-border);
+}
+
+.sales-shared-theme .table-ui-modern tbody td {
+    padding: 14px 20px;
+    font-size: 14px;
+    color: var(--sales-text-main);
+    border-bottom: 1px solid #F0EDE4;
+    vertical-align: middle;
+}
+
+.sales-shared-theme .table-ui-modern tbody tr:hover {
+    background: #FDFCFB;
+}
+
+.sales-shared-theme .table-ui-modern .amt-payable {
+    color: var(--sales-success);
+    font-weight: 700;
+}
+
+.sales-shared-theme .table-ui-modern .amt-refund {
+    color: var(--sales-danger);
+    font-weight: 600;
+}
+
+.sales-shared-theme .table-ui-modern th:last-child,
+.sales-shared-theme .table-ui-modern td:last-child {
+    text-align: center;
+}

@@ -4052,11 +4052,11 @@ We hope to see you again!";
                     -------------------------- */
                     $order_type = '';
                     if ($value->order_type == '1') {
-                        $order_type = 'Dine In';
+                        $order_type = '<span class="order-type-pill">Dine In</span>';
                     } elseif ($value->order_type == '2') {
-                        $order_type = 'Take Away';
+                        $order_type = '<span class="order-type-pill">Take Away</span>';
                     } elseif ($value->order_type == '3') {
-                        $order_type = 'Delivery';
+                        $order_type = '<span class="order-type-pill">Delivery</span>';
                     }
 
                     /* -------------------------
@@ -4064,26 +4064,26 @@ We hope to see you again!";
                     -------------------------- */
                     $html = '';
 
-                    $html .= '<a class="btn btn-deep-purple" href="'.base_url().'Sale/refund/'.$this->custom->encrypt_decrypt($value->id, 'encrypt').'">
-                                <i class="fas fa-money-bill-alt"></i>
+                    $html .= '<a class="action-btn" href="'.base_url().'Sale/refund/'.$this->custom->encrypt_decrypt($value->id, 'encrypt').'" title="Refund">
+                                <i class="fa-solid fa-rotate-left"></i>
                             </a>';
 
-                    $html .= '<a class="btn btn-unique" onclick="viewInvoice('.$value->id.')" href="javascript:void(0)">
-                                <i class="fas fa-print"></i>
+                    $html .= '<a class="action-btn" onclick="viewInvoice('.$value->id.')" href="javascript:void(0)" title="Print">
+                                <i class="fa-solid fa-print"></i>
                             </a>';
 
-                    if ($order_type == 'Delivery') {
-                        $html .= '<a class="btn btn-cyan change_delivery_details" data-id="'.$value->id.'">
-                                    <i class="fa fa-truck"></i>
+                    if ($value->order_type == '3') {
+                        $html .= '<a class="action-btn change_delivery_details" data-id="'.$value->id.'" title="Delivery Details">
+                                    <i class="fa-solid fa-truck"></i>
                                 </a>';
                     }
 
-                    $html .= '<a class="btn btn-warning" href="'.base_url().'Sale/POS/'.$user_id.'/'.$outlet_id.'/'.$value->id.'">
-                                <i class="far fa-edit"></i>
+                    $html .= '<a class="action-btn" href="'.base_url().'Sale/POS/'.$user_id.'/'.$outlet_id.'/'.$value->id.'" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </a>';
 
-                    $html .= '<a class="btn btn-danger" href="'.base_url().'Sale/deleteSale/'.$this->custom->encrypt_decrypt($value->id, 'encrypt').'">
-                                <i class="fa-regular fa-trash-can"></i>
+                    $html .= '<a class="action-btn delete" href="'.base_url().'Sale/deleteSale/'.$this->custom->encrypt_decrypt($value->id, 'encrypt').'" title="Delete">
+                                <i class="fa-solid fa-trash-can"></i>
                             </a>';
 
                     /* -------------------------
@@ -4108,14 +4108,14 @@ We hope to see you again!";
                     $sub_array = [];
                     $sub_array[] = escape_output($i--);
                     $sub_array[] = escape_output($value->sale_no);
-                    $sub_array[] = escape_output($order_type);
+                    $sub_array[] = $order_type;
                     $sub_array[] = escape_output(date($this->session->userdata('date_format'), strtotime($value->sale_date))).' '.escape_output($value->order_time);
                     $sub_array[] = escape_output($value->customer_name).($value->customer_phone ? ' ('.$value->customer_phone.')' : '');
-                    $sub_array[] = escape_output(getAmtPCustom($value->total_payable));
-                    $sub_array[] = $value->total_refund ? escape_output(getAmtPCustom($value->total_refund)) : '';
+                    $sub_array[] = '<span class="amt-payable">'.escape_output(getAmtPCustom($value->total_payable)).'</span>';
+                    $sub_array[] = '<span class="amt-refund">'.($value->total_refund ? escape_output(getAmtPCustom($value->total_refund)) : '0.00').'</span>';
                     $sub_array[] = $payment_details;
                     $sub_array[] = escape_output($value->full_name);
-                    $sub_array[] = '<div class="btn_group_wrap">'.$html.'</div>';
+                    $sub_array[] = '<div class="action-buttons">'.$html.'</div>';
 
                     $data[] = $sub_array;
                 }

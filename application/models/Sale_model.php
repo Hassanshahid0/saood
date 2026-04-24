@@ -1853,6 +1853,28 @@ class Sale_model extends CI_Model {
     $this->db->where('tbl_sales.del_status', 'Live');
 
     /* -----------------------------
+       CUSTOM FILTERS
+    ------------------------------ */
+    if (!empty($_POST['startDate']) && !empty($_POST['endDate'])) {
+        $startDate = $_POST['startDate'];
+        $endDate = $_POST['endDate'];
+        $this->db->where('tbl_sales.sale_date >=', $startDate);
+        $this->db->where('tbl_sales.sale_date <=', $endDate);
+    } elseif (!empty($_POST['startDate'])) {
+        $this->db->where('tbl_sales.sale_date >=', $_POST['startDate']);
+    } elseif (!empty($_POST['endDate'])) {
+        $this->db->where('tbl_sales.sale_date <=', $_POST['endDate']);
+    }
+
+    if (!empty($_POST['order_type'])) {
+        $this->db->where('tbl_sales.order_type', $_POST['order_type']);
+    }
+
+    if (!empty($_POST['payment_method_id'])) {
+        $this->db->where('tbl_sales.payment_method_id', $_POST['payment_method_id']);
+    }
+
+    /* -----------------------------
        ORDERING
     ------------------------------ */
     $this->db->order_by('tbl_sales.id', 'DESC');
