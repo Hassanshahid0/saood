@@ -10,7 +10,8 @@
 <input type="hidden" id="change_delivery_address" value="<?php echo getPOSChecker("123","change_delivery_address"); ?>">
 <input type="hidden" id="menu_not_permit_access" value="<?php echo lang('menu_not_permit_access'); ?>">
 <input type="hidden" id="status_changed_successfully" value="<?php echo lang('status_changed_successfully'); ?>">
-<section class="main-content-wrapper">
+<link rel="stylesheet" href="<?php echo base_url(); ?>frequent_changing/newDesign/components/sales-shared.css">
+<section class="main-content-wrapper sales-shared-theme">
 
     <?php
 if ($this->session->flashdata('exception')) {
@@ -45,10 +46,10 @@ if ($this->session->flashdata('exception_1')) {
                 $export_daily_sale = $this->session->userdata('export_daily_sale');
                 if($export_daily_sale && $export_daily_sale=="enable"): ?>
             <div class="col-md-2">
-                <a href="<?php echo base_url() ?>Sale/exportDailySales"  data-access="exportDailySales-123" class="btn_list m-right btn bg-blue-btn delete menu_assign_class"><?php echo lang('exportDailySales'); ?></a>
+                <a href="<?php echo base_url() ?>Sale/exportDailySales"  data-access="exportDailySales-123" class="btn_list m-right btn bg-blue-btn delete menu_assign_class btn-ui-primary"><?php echo lang('exportDailySales'); ?></a>
             </div>
             <div class="col-md-2">
-                <a href="<?php echo base_url() ?>Sale/resetDailySales"  data-access="resetDailySales-123" class="btn_list m-right btn bg-blue-btn delete menu_assign_class"><?php echo lang('resetDailySales'); ?></a>
+                <a href="<?php echo base_url() ?>Sale/resetDailySales"  data-access="resetDailySales-123" class="btn_list m-right btn bg-blue-btn delete menu_assign_class btn-ui-primary"><?php echo lang('resetDailySales'); ?></a>
             </div>
             <div class="col-md-2">
 
@@ -62,11 +63,11 @@ if ($this->session->flashdata('exception_1')) {
         </div>
     </section>
 
-    <div class="box-wrapper">
+    <div class="box-wrapper sales-card-ui">
         <div class="table-box">
             <!-- /.box-header -->
             <div class="table-responsive">
-                <table id="datatable" class="table">
+                <table id="datatable" class="table table-ui-modern">
                     <thead>
                         <tr>
                             <th class="ir_w2_txt_center"><?php echo lang('sn'); ?></th>
